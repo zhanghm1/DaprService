@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  daprtest.orderapi:
+    image: ${DOCKER_REGISTRY-}daprtestorderapi
+    build:
+      context: .
+      dockerfile: DaprService/Dockerfile
+
+      
+  daprtest.orderapi-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "orderapi", "-app-port", "80" ]
+    depends_on:
+      - daprtest.orderapi
+    network_mode: "service:daprtest.orderapi"
+
+  daprtest.productapi:
+    image: ${DOCKER_REGISTRY-}daprtestproductapi
+    build:
+      context: .
+      dockerfile: DaprTest.ProductApi/Dockerfile
+
+
+  daprtest.productapi-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "productapi", "-app-port", "80" ]
+    depends_on:
+      - daprtest.productapi
+    network_mode: "service:daprtest.productapi"

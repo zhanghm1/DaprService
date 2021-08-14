@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  daprtest.orderapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "7001:80"
+      - "53000:50001"
+
+
+
+  daprtest.productapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "7002:80"
+      - "54000:50001"
+
+
