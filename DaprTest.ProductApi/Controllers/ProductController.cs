@@ -1,4 +1,5 @@
 ﻿using Dapr;
+using DaprTest.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,7 +20,9 @@ namespace DaprTest.ProductApi.Controllers
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
-            Products = new List<Product>() {
+            if (Products == null)
+            {
+                Products = new List<Product>() {
                 new Product(){
                     Id=1,
                     Name="iPhone X",
@@ -57,6 +60,7 @@ namespace DaprTest.ProductApi.Controllers
                     }
                 },
             };
+            }
         }
 
         [HttpGet]
@@ -69,31 +73,21 @@ namespace DaprTest.ProductApi.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Topic("order", "newOrder")]
-        [HttpPut]
-        public async Task<IActionResult> Put(JianKuCunDto request)
+        [Topic("pubsub", "newOrder")]
+        //[HttpPost]
+        public async Task<IActionResult> Post(JianKuCunDto request)
         {
-            var productModel = Products.Where(a => a.Id == request.ProductId)?.FirstOrDefault().Models.Where(a => a.Model == request.Model)?.FirstOrDefault();
-            productModel.Number -= request.Number;
+            _logger.LogInformation("pubsub:newOrder");
+            var productModel = Products.Where(a => a.Id == request.ProductId).FirstOrDefault()?.Models.Where(a => a.Model == request.Model).FirstOrDefault();
+            if (productModel!=null)
+            {
+                productModel.Number -= request.Number;
+            }
+            
             return Ok();
         }
     }
-    public class Product
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<ProductModel> Models { get; set; }
-    }
-    /// <summary>
-    /// 型号
-    /// </summary>
-    public class ProductModel
-    {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
-        public string Model { get; set; }
-        public int Number { get; set; }
-    }
+
     public class JianKuCunDto
     { 
         public int ProductId { get; set; }

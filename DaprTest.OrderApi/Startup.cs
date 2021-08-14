@@ -1,6 +1,8 @@
+using DaprTest.OrderApi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,6 +33,10 @@ namespace DaprTest.OrderApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DaprService", Version = "v1" });
             });
+            string sqlConnction = Configuration["ConnectionString"];
+            services.AddDbContext<OrderDbContext>(options=> {
+                options.UseMySql(sqlConnction, ServerVersion.Parse("8.0"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,8 +55,8 @@ namespace DaprTest.OrderApi
             app.UseCloudEvents();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapSubscribeHandler();
                 endpoints.MapControllers();
+                endpoints.MapSubscribeHandler();
             });
         }
     }

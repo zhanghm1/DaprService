@@ -1,20 +1,61 @@
 version: '3.4'
 
 services:
+  mysql:
+    container_name: mysqldapr
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+    volumes:
+      - D://docker/mysqldapr/db:/var/lib/mysql
+      - D://docker/mysqldapr/config:/etc/my.cnf
+    ports:
+      - "3307:3306"
+
+  rabbitmq:
+    ports:
+      - "5672:5672"
+
+  redis:
+    ports:
+      - "5379:6379"
+
+  zipkin:
+    ports:
+      - "5411:9411"
+
   daprtest.orderapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=order_db;user ID=root;Password=123456;
     ports:
       - "7001:80"
-      - "53000:50001"
+      - "51000:50001"
 
-
+  daprtest.orderapi.dapr:
+    command: [ "./daprd",
+    "-app-id", "orderapi",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml"
+    ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
 
   daprtest.productapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=product_db;user ID=root;Password=123456;
     ports:
       - "7002:80"
-      - "54000:50001"
+      - "52000:50001"
 
-
+  daprtest.productapi.dapr:
+    command: [ "./daprd",
+    "-app-id", "productapi",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"

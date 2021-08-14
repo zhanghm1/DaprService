@@ -1,16 +1,27 @@
 version: '3.4'
 
 services:
+
+  mysql:
+    image: mysql:latest
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  redis:
+    image: redis:alpine
+
+  zipkin:
+    image: openzipkin/zipkin-slim
+
   daprtest.orderapi:
     image: ${DOCKER_REGISTRY-}daprtestorderapi
     build:
       context: .
-      dockerfile: DaprService/Dockerfile
-
-      
-  daprtest.orderapi-dapr:
+      dockerfile: DaprTest.OrderApi/Dockerfile
+    
+  daprtest.orderapi.dapr:
     image: "daprio/daprd:latest"
-    command: [ "./daprd", "-app-id", "orderapi", "-app-port", "80" ]
     depends_on:
       - daprtest.orderapi
     network_mode: "service:daprtest.orderapi"
@@ -21,10 +32,9 @@ services:
       context: .
       dockerfile: DaprTest.ProductApi/Dockerfile
 
-
-  daprtest.productapi-dapr:
+  daprtest.productapi.dapr:
     image: "daprio/daprd:latest"
-    command: [ "./daprd", "-app-id", "productapi", "-app-port", "80" ]
     depends_on:
       - daprtest.productapi
     network_mode: "service:daprtest.productapi"
+

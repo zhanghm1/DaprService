@@ -1,4 +1,5 @@
 ﻿using Dapr.Client;
+using DaprTest.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,22 +23,22 @@ namespace DaprTest.OrderApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<string>>  Get()
+        public async Task<IEnumerable<Product>>  Get()
         {
-            await _daprClient.PublishEventAsync("order", "newOrder", new JianKuCunDto
-            {
-                ProductId = 1,
-                Model = "32G",
-                Number = 1
+            //await _daprClient.PublishEventAsync("order", "newOrder", new JianKuCunDto
+            //{
+            //    ProductId = 1,
+            //    Model = "32G",
+            //    Number = 1
 
-            });
+            //});
 
-            return await _daprClient.InvokeMethodAsync<IEnumerable<string>>(HttpMethod.Get,"productapi", "Product");
+            return await _daprClient.InvokeMethodAsync<IEnumerable<Product>>(HttpMethod.Get,"productapi", "Product");
         }
         [HttpPost]
         public async Task<IActionResult> Post(AddOrderDto addOrder)
         {
-            await _daprClient.PublishEventAsync("order", "newOrder", new JianKuCunDto
+            await _daprClient.PublishEventAsync("pubsub", "newOrder", new JianKuCunDto
             {
                 ProductId = addOrder.ProductId,
                 Model = addOrder.Model,
