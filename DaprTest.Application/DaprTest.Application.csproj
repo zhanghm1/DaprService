@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DaprTest.Common\DaprTest.Common.csproj" />
+    <ProjectReference Include="..\DaprTest.Domain\DaprTest.Domain.csproj" />
+    <ProjectReference Include="..\DaprTest.EFCore\DaprTest.EFCore.csproj" />
+  </ItemGroup>
+
+</Project>

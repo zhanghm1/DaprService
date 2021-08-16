@@ -1,5 +1,8 @@
+using DaprTest.ProductApi.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,9 +14,29 @@ namespace DaprTest.ProductApi
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                var host = CreateHostBuilder(args).Build();
+
+                using (var scope = host.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+
+                    var context = services.GetRequiredService<ProductDbContext>();
+                    await context.Database.MigrateAsync();
+
+                    var seedData = services.GetRequiredService<ProductDbSeedData>();
+                    await seedData.Init();
+                }
+
+                host.Run();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -31,11 +31,12 @@ namespace DaprTest.OrderApi
             services.AddControllers().AddDapr();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DaprService", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "OrderApi", Version = "v1" });
             });
-            string sqlConnction = Configuration["ConnectionString"];
-            services.AddDbContext<OrderDbContext>(options=> {
-                options.UseMySql(sqlConnction, ServerVersion.Parse("8.0"));
+            string connectionString = Configuration["ConnectionString"];
+            Console.WriteLine(connectionString);
+            services.AddDbContext<OrderDbContext>(options => {
+                options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
             });
         }
 

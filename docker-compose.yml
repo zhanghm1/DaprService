@@ -38,3 +38,23 @@ services:
       - daprtest.productapi
     network_mode: "service:daprtest.productapi"
 
+
+  daprtest.memberapi:
+    image: ${DOCKER_REGISTRY-}daprtestmemberapi
+    build:
+      context: .
+      dockerfile: DaprTest.MemberApi/Dockerfile
+
+  daprtest.memberapi.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - daprtest.memberapi
+    network_mode: "service:daprtest.memberapi"
+
+
+  daprtest.identityserver:
+    image: ${DOCKER_REGISTRY-}daprtestidentityserver
+    build:
+      context: .
+      dockerfile: DaprTest.IdentityServer/Dockerfile
+

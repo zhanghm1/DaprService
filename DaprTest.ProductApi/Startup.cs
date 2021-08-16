@@ -33,10 +33,13 @@ namespace DaprTest.ProductApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DaprTest.ProductApi", Version = "v1" });
             });
-            string sqlConnction = Configuration["ConnectionString"];
+            string connectionString = Configuration["ConnectionString"];
+            Console.WriteLine(connectionString);
             services.AddDbContext<ProductDbContext>(options => {
-                options.UseMySql(sqlConnction, ServerVersion.Parse("8.0"));
+                options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
             });
+
+            services.AddScoped<ProductDbSeedData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

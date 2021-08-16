@@ -1,6 +1,8 @@
 ﻿using Dapr;
 using DaprTest.Domain;
+using DaprTest.ProductApi.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,77 +15,41 @@ namespace DaprTest.ProductApi.Controllers
     [Route("[controller]")]
     public class ProductController : ControllerBase
     {
-        private static List<Product> Products;
-
+        private readonly ProductDbContext _productDbContext;
         private readonly ILogger<ProductController> _logger;
 
-        public ProductController(ILogger<ProductController> logger)
+        public ProductController(ILogger<ProductController> logger, ProductDbContext productDbContext)
         {
             _logger = logger;
-            if (Products == null)
-            {
-                Products = new List<Product>() {
-                new Product(){
-                    Id=1,
-                    Name="iPhone X",
-                    Models=new List<ProductModel>(){
-                        new ProductModel(){
-                            Id=1,
-                            ProductId=1,
-                            Model="64G",
-                            Number=100
-                        },
-                        new ProductModel(){
-                            Id=1,
-                            ProductId=1,
-                            Model="128G",
-                            Number=100
-                        },
-                    }
-                },
-                new Product(){
-                    Id=2,
-                    Name="iPhone XR",
-                    Models=new List<ProductModel>(){
-                        new ProductModel(){
-                            Id=1,
-                            ProductId=1,
-                            Model="64G",
-                            Number=100
-                        },
-                        new ProductModel(){
-                            Id=1,
-                            ProductId=1,
-                            Model="128G",
-                            Number=100
-                        },
-                    }
-                },
-            };
-            }
+            _productDbContext = productDbContext;
         }
 
         [HttpGet]
         public async Task<List<Product>>  Get()
         {
-            return Products;
+            return await _productDbContext.Products.Include(a=>a.Models).ToListAsync();
         }
         /// <summary>
         /// 减库存
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Topic("pubsub", "newOrder")]
-        //[HttpPost]
-        public async Task<IActionResult> Post(JianKuCunDto request)
+        [Topic("pubsub", "newOrder")]// 必须要是正常的action 接口才有效
+        [HttpPost]
+        public async Task<IActionResult> newOrder(JianKuCunDto request)
         {
             _logger.LogInformation("pubsub:newOrder");
-            var productModel = Products.Where(a => a.Id == request.ProductId).FirstOrDefault()?.Models.Where(a => a.Model == request.Model).FirstOrDefault();
-            if (productModel!=null)
+            var product = _productDbContext.Products.Include(a=>a.Models).Where(a => a.Id == request.ProductId).FirstOrDefault();
+            if (product!=null)
             {
-                productModel.Number -= request.Number;
+                var productModel = product.Models.Where(a => a.Model == request.Model).FirstOrDefault();
+                if (productModel != null)
+                {
+                    productModel.Number -= request.Number;
+                }
+                await _productDbContext.SaveChangesAsync();
             }
-            
+
             return Ok();
         }
     }
