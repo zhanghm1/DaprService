@@ -50,5 +50,10 @@ namespace DaprTest.Application.MemberServices
         {
             return await _dbContext.Members.FirstOrDefaultAsync(a => a.Email == email);
         }
+
+        public async Task<bool> CheckPassword(Member member, string password)
+        {
+           return _passwordHandler.VerifyPassword(member.PasswordHash, member.PasswordSecert, password);
+        }
     }
 }

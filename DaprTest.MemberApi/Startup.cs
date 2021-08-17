@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,38 @@ namespace DaprTest.MemberApi
             services.AddScoped<MemberDbSeedData>();
             services.AddScoped<IMemberAccountManage, DefaultMemberAccountManage>();
             services.AddScoped<IPasswordHandler, DefaultPasswordHandler> ();
+
+            // accepts any access token issued by identity server
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = Configuration["IdentityServerUrl"];
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
+
+            // adds an authorization policy to make sure the token is for scope 'api1'
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "memberapi");
+                });
+            });
+
+            // Ìí¼Ó¿çÓò
+            services.AddCors(options => {
+                options.AddPolicy("any", policy => {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +89,8 @@ namespace DaprTest.MemberApi
             }
 
             app.UseRouting();
-
+            app.UseCors("any");
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseCloudEvents();
             app.UseEndpoints(endpoints =>

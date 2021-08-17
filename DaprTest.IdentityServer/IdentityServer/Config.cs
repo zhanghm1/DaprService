@@ -1,4 +1,6 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +21,58 @@ namespace DaprTest.IdentityServer
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("api1", "My API")
+                new ApiScope("orderapi", "My API"),
+                new ApiScope("productapi", "My API"),
+                new ApiScope("memberapi", "My API"),
             };
-        public static IEnumerable<Client> Clients=>new List<Client>
+        public static IEnumerable<Client> Clients(IConfiguration Configuration)
         {
-            new Client
+            string MVCUrl = Configuration["MVCUrl"];
+            return new List<Client>
             {
-                ClientId = "service.client",
-                ClientSecrets = { new Secret("secret".Sha256()) },
+                 new Client
+                    {
+                        ClientId = "mvc",
+                        ClientSecrets = { new Secret("secret".Sha256()) },
 
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
-                AllowedScopes = { "api1", "api2.read_only" }
-            }
-        };
-        
+                        AllowedGrantTypes = GrantTypes.Code,
+                    
+                        // where to redirect to after login
+                        RedirectUris = { MVCUrl+"/signin-oidc" },
+
+                        // where to redirect to after logout
+                        PostLogoutRedirectUris = { MVCUrl + "/signout-callback-oidc" },
+
+                        AllowedScopes = new List<string>
+                        {
+                            IdentityServerConstants.StandardScopes.OpenId,
+                            IdentityServerConstants.StandardScopes.Profile,
+                            "orderapi",
+                            "productapi",
+                            "memberapi",
+                        }
+                    },
+                 new Client
+                    {
+                        ClientId = "js",
+                        ClientName = "JavaScript Client",
+                        AllowedGrantTypes = GrantTypes.Code,
+                        RequireClientSecret = false,
+
+                        RedirectUris =           { "http://localhost:7002/callback.html" },
+                        PostLogoutRedirectUris = { "http://localhost:7002/index.html" },
+                        AllowedCorsOrigins =     { "http://localhost:7002" },
+
+                        AllowedScopes = new List<string>
+                        {
+                            IdentityServerConstants.StandardScopes.OpenId,
+                            IdentityServerConstants.StandardScopes.Profile,
+                            "orderapi",
+                            "productapi",
+                            "memberapi",
+                        }
+                    }
+            };
+        }
     }
 }

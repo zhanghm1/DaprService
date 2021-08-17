@@ -16,6 +16,6 @@ namespace DaprTest.Application.MemberServices
         Task<Member> GetMemberByUserName(string userName);
         Task<bool> AnyByUserName(string userName);
         Task<bool> AnyById(int id);
-        
+        Task<bool> CheckPassword(Member member, string password);
     }
 }

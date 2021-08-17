@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model DaprTest.IdentityServer.Controllers.LoginInputModel
+<form  asp-route="Login">
+    <div class="form-group">
+        <label for="UserName">邮箱</label>
+        <input type="text" class="form-control" id="UserName" asp-for="UserName" aria-describedby="emailHelp">
+        <small id="emailHelp" class="form-text text-muted">我们绝不会与其他任何人共享您的电子邮件。</small>
+    </div>
+    <div class="form-group">
+        <label for="Password">密码</label>
+        <input type="password" class="form-control"  id="Password"  asp-for="Password">
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input"  id="RememberLogin"  asp-for="RememberLogin">
+        <label class="form-check-label" for="RememberLogin">记住账号</label>
+        <input type="hidden" asp-for="ReturnUrl" >
+    </div>
+    <button type="submit" class="btn btn-primary">登录</button>
+</form>

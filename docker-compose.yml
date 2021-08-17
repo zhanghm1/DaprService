@@ -58,3 +58,18 @@ services:
       context: .
       dockerfile: DaprTest.IdentityServer/Dockerfile
 
+  daprtest.ui.mvc:
+    image: ${DOCKER_REGISTRY-}daprtestuimvc
+    build:
+      context: .
+      dockerfile: DaprTest.UI.MVC/Dockerfile
+
+  daprtest.ui.js:
+    image: ${DOCKER_REGISTRY-}uijs
+    build:
+      context: .
+      dockerfile: DaprTest.UI.JS/wwwroot/Dockerfile
+
+
+
+
