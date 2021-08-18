@@ -29,8 +29,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=order_db;user ID=root;Password=123456;
       - IdentityServerUrl=http://192.168.1.238:7000
-    ports:
-      - "6101:80"
+
 
   daprtest.orderapi.dapr:
     command: [ "./daprd",
@@ -48,8 +47,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=product_db;user ID=root;Password=123456;
       - IdentityServerUrl=http://192.168.1.238:7000
-    ports:
-      - "6102:80"
+
 
   daprtest.productapi.dapr:
     command: [ "./daprd",
@@ -66,8 +64,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
       - IdentityServerUrl=http://192.168.1.238:7000
-    ports:
-      - "6103:80"
+
 
   daprtest.memberapi.dapr:
     command: [ "./daprd",
@@ -91,12 +88,14 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerUrl=http://192.168.1.238:7000
+      - ApiUrl=http://192.168.1.238:6001
     ports:
       - "7001:80"
 
   daprtest.ui.js:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "7002:80"
 
+  daprtest.apigateway:
+    ports:
+      - "6001:80"

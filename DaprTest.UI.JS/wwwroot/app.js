@@ -19,7 +19,7 @@ document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
 
 var config = {
-    authority: "http://localhost:7000",
+    authority: "http://192.168.1.238:7000",
     client_id: "js",
     redirect_uri: "http://localhost:7002/callback.html",
     response_type: "code",
@@ -43,7 +43,7 @@ function login() {
 
 function api() {
     mgr.getUser().then(function (user) {
-        var url = "http://localhost:6103/member";
+        var url = "http://localhost:6001/api/member/member";
         console.log(user.access_token);
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url);

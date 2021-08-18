@@ -65,8 +65,10 @@ namespace DaprTest.IdentityServer.Controllers
             
             return View();
         }
-        public IActionResult LoginOut(string returnUrl)
+
+        public IActionResult Logout(string logoutId)
         {
+            
             return View();
         }
     }
