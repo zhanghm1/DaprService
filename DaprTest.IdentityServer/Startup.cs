@@ -61,10 +61,6 @@ namespace DaprTest.IdentityServer
             services.AddScoped<IMemberAccountManage, DefaultMemberAccountManage>();
             services.AddScoped<IPasswordHandler, DefaultPasswordHandler>();
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.MinimumSameSitePolicy = SameSiteMode.Lax;
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,15 +75,14 @@ namespace DaprTest.IdentityServer
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
-            app.UseRouting();
-
-            app.UseCookiePolicy();
-
             app.UseCors("any");
-
-            //app.UseAuthorization();
             app.UseIdentityServer();//UseIdentityServer 包含UseAuthorization
-            app.UseAuthorization();
+
+            //eShopDapr的解决方案，cookie在Routing 之前
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
+            app.UseRouting();
+            
+            //app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

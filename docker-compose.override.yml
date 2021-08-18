@@ -28,7 +28,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=order_db;user ID=root;Password=123456;
-      - IdentityServerUrl=http://192.168.1.238:7000
+      - IdentityServerUrl=http://192.168.0.109:7000
 
 
   daprtest.orderapi.dapr:
@@ -46,7 +46,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=product_db;user ID=root;Password=123456;
-      - IdentityServerUrl=http://192.168.1.238:7000
+      - IdentityServerUrl=http://192.168.0.109:7000
 
 
   daprtest.productapi.dapr:
@@ -63,7 +63,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
-      - IdentityServerUrl=http://192.168.1.238:7000
+      - IdentityServerUrl=http://192.168.0.109:7000
 
 
   daprtest.memberapi.dapr:
@@ -81,14 +81,17 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
+      - MVCUrl=http://192.168.0.109:7001
+      - JSUrl=http://localhost:7002
     ports:
       - "7000:80"
 
   daprtest.ui.mvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerUrl=http://192.168.1.238:7000
-      - ApiUrl=http://192.168.1.238:6001
+      #内部访问又要浏览器跳转，用服务名能内部访问不能跳转，用localhost能跳转，不能内部访问，所以用IP
+      - IdentityServerUrl=http://192.168.0.109:7000   
+      - ApiUrl=http://daprtest.apigateway
     ports:
       - "7001:80"
 

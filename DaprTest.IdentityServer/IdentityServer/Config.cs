@@ -28,6 +28,7 @@ namespace DaprTest.IdentityServer
         public static IEnumerable<Client> Clients(IConfiguration Configuration)
         {
             string MVCUrl = Configuration["MVCUrl"];
+            string JSUrl = Configuration["JSUrl"];
             return new List<Client>
             {
                  new Client
@@ -59,9 +60,9 @@ namespace DaprTest.IdentityServer
                         AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,
 
-                        RedirectUris =           { "http://localhost:7002/callback.html" },
-                        PostLogoutRedirectUris = { "http://localhost:7002/index.html" },
-                        AllowedCorsOrigins =     { "http://localhost:7002" },
+                        RedirectUris =           { JSUrl+"/callback.html" },
+                        PostLogoutRedirectUris = { JSUrl+"/index.html" },
+                        AllowedCorsOrigins =     { JSUrl },
 
                         AllowedScopes = new List<string>
                         {

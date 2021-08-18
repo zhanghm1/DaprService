@@ -19,7 +19,7 @@ document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
 
 var config = {
-    authority: "http://192.168.1.238:7000",
+    authority: "http://192.168.0.109:7000",
     client_id: "js",
     redirect_uri: "http://localhost:7002/callback.html",
     response_type: "code",
