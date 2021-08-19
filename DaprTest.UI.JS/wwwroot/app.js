@@ -18,13 +18,14 @@ document.getElementById("login").addEventListener("click", login, false);
 document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
 
+var LOCALHOST_IP = "192.168.1.238";
 var config = {
-    authority: "http://192.168.0.109:7000",
+    authority: "http://" + LOCALHOST_IP+":7000",
     client_id: "js",
-    redirect_uri: "http://localhost:7002/callback.html",
+    redirect_uri: "http://" + LOCALHOST_IP +":7002/callback.html",
     response_type: "code",
     scope:"openid profile orderapi productapi memberapi",
-    post_logout_redirect_uri : "http://localhost:7002/index.html",
+    post_logout_redirect_uri: "http://" + LOCALHOST_IP +":7002/index.html",
 };
 var mgr = new Oidc.UserManager(config);
 
@@ -43,7 +44,7 @@ function login() {
 
 function api() {
     mgr.getUser().then(function (user) {
-        var url = "http://localhost:6001/api/member/member";
+        var url = "http://" + LOCALHOST_IP +":6001/api/member/member";
         console.log(user.access_token);
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url);
