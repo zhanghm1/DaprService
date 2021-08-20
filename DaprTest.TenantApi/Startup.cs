@@ -1,4 +1,4 @@
-using DaprTest.StoreApi.Data;
+using DaprTest.TenantApi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DaprTest.StoreApi
+namespace DaprTest.TenantApi
 {
     public class Startup
     {
@@ -32,11 +32,11 @@ namespace DaprTest.StoreApi
             services.AddControllers().AddDapr();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "StoreApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "OrderApi", Version = "v1" });
             });
             string connectionString = Configuration["ConnectionString"];
             Console.WriteLine(connectionString);
-            services.AddDbContext<StoreDbContext>(options => {
+            services.AddDbContext<TenantDbContext>(options => {
                 options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
             });
 
@@ -58,7 +58,7 @@ namespace DaprTest.StoreApi
                 options.AddPolicy("ApiScope", policy =>
                 {
                     policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("scope", "storeapi");
+                    policy.RequireClaim("scope", "orderapi");
                 });
             });
 

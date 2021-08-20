@@ -16,6 +16,8 @@ namespace DaprTest.ProductApi.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductModel> ProductModels { get; set; }
+        public DbSet<ProductStore> ProductStores { get; set; }
+        public DbSet<ProductModelStore> ProductModelStores { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

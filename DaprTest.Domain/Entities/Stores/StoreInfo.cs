@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DaprTest.Domain.Entities.Stores
 {
-    public class StoreInfo:EntityBase
+    public class StoreInfo:EntityTenantBase
     {
         public string Name { get; set; }
         public string ImageUrl { get; set; }

@@ -30,11 +30,11 @@ namespace DaprTest.Application.MemberServices
         {
             return await _dbContext.Members.AnyAsync(a => a.UserName == userName);
         }
-        public async Task<bool> AnyById(int id)
+        public async Task<bool> AnyById(string id)
         {
             return await _dbContext.Members.AnyAsync(a => a.Id == id);
         }
-        public async Task<Member> GetMemberById(int id)
+        public async Task<Member> GetMemberById(string id)
         {
            return await _dbContext.Members.FirstOrDefaultAsync(a => a.Id == id);
         }

@@ -56,7 +56,7 @@ namespace DaprTest.ProductApi.Controllers
 
     public class JianKuCunDto
     { 
-        public int ProductId { get; set; }
+        public string ProductId { get; set; }
         public string Model { get; set; }
         public int Number { get; set; }
     }

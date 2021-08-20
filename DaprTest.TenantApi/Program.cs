@@ -1,4 +1,4 @@
-using DaprTest.PayApi.Data;
+using DaprTest.TenantApi.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DaprTest.PayApi
+namespace DaprTest.TenantApi
 {
     public class Program
     {
@@ -24,7 +24,7 @@ namespace DaprTest.PayApi
                 {
                     var services = scope.ServiceProvider;
 
-                    var context = services.GetRequiredService<PayDbContext>();
+                    var context = services.GetRequiredService<TenantDbContext>();
                     await context.Database.MigrateAsync();
                 }
 

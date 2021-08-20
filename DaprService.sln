@@ -53,9 +53,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginxgateway", "nginxgatewa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{828C1BA6-BFCD-4861-BF15-0F749FC940DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaprTest.PayApi", "DaprTest.PayApi\DaprTest.PayApi.csproj", "{B6E7D46A-B25B-4501-8346-B8F8E2796710}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprTest.PayApi", "DaprTest.PayApi\DaprTest.PayApi.csproj", "{B6E7D46A-B25B-4501-8346-B8F8E2796710}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaprTest.StoreApi", "DaprTest.StoreApi\DaprTest.StoreApi.csproj", "{94B97886-0B6C-4894-A11C-AD396A6C0770}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprTest.StoreApi", "DaprTest.StoreApi\DaprTest.StoreApi.csproj", "{94B97886-0B6C-4894-A11C-AD396A6C0770}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaprTest.TenantApi", "DaprTest.TenantApi\DaprTest.TenantApi.csproj", "{CA14657E-F5CF-482E-AB82-079F537EFCC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +117,10 @@ Global
 		{94B97886-0B6C-4894-A11C-AD396A6C0770}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94B97886-0B6C-4894-A11C-AD396A6C0770}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94B97886-0B6C-4894-A11C-AD396A6C0770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA14657E-F5CF-482E-AB82-079F537EFCC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA14657E-F5CF-482E-AB82-079F537EFCC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA14657E-F5CF-482E-AB82-079F537EFCC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA14657E-F5CF-482E-AB82-079F537EFCC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +145,7 @@ Global
 		{828C1BA6-BFCD-4861-BF15-0F749FC940DF} = {C09ACDAF-3BA9-45A2-8A2C-BF1335B79269}
 		{B6E7D46A-B25B-4501-8346-B8F8E2796710} = {B2CF826F-FE8C-4CC1-92AD-D20155984CB8}
 		{94B97886-0B6C-4894-A11C-AD396A6C0770} = {B2CF826F-FE8C-4CC1-92AD-D20155984CB8}
+		{CA14657E-F5CF-482E-AB82-079F537EFCC1} = {B2CF826F-FE8C-4CC1-92AD-D20155984CB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5EF2365C-CAC6-428F-BBF8-D4824E3B5A82}

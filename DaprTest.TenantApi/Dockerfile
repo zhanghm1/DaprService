@@ -6,18 +6,18 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["DaprTest.OrderApi/DaprTest.OrderApi.csproj", "DaprTest.OrderApi/"]
+COPY ["DaprTest.TenantApi/DaprTest.TenantApi.csproj", "DaprTest.TenantApi/"]
 COPY ["DaprTest.Domain/DaprTest.Domain.csproj", "DaprTest.Domain/"]
 COPY ["DaprTest.Common/DaprTest.Common.csproj", "DaprTest.Common/"]
-RUN dotnet restore "DaprTest.OrderApi/DaprTest.OrderApi.csproj"
+RUN dotnet restore "DaprTest.TenantApi/DaprTest.TenantApi.csproj"
 COPY . .
-WORKDIR "/src/DaprTest.OrderApi"
-RUN dotnet build "DaprTest.OrderApi.csproj" -c Release -o /app/build
+WORKDIR "/src/DaprTest.TenantApi"
+RUN dotnet build "DaprTest.TenantApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "DaprTest.OrderApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "DaprTest.TenantApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DaprTest.OrderApi.dll"]
+ENTRYPOINT ["dotnet", "DaprTest.TenantApi.dll"]

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DaprTest.OrderApi.Data
+namespace DaprTest.PayApi.Data
 {
     public class PayDbContext : DbContext
     {
@@ -15,7 +15,8 @@ namespace DaprTest.OrderApi.Data
         {
         }
 
-        public DbSet<PayRecord> PayRecords { get; set; }
+        public DbSet<PaymentRecord> PaymentRecords { get; set; }
+        public DbSet<PaymentChannel> PaymentChannels { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

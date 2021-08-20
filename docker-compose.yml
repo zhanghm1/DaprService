@@ -14,12 +14,44 @@ services:
   zipkin:
     image: openzipkin/zipkin-slim
 
+  daprtest.payapi:
+    image: ${DOCKER_REGISTRY-}daprtestpayapi
+    build:
+      context: .
+      dockerfile: DaprTest.PayApi/Dockerfile
+  daprtest.payapi.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - daprtest.payapi
+    network_mode: "service:daprtest.payapi"
+
+  daprtest.storeapi:
+    image: ${DOCKER_REGISTRY-}daprteststoreapi
+    build:
+      context: .
+      dockerfile: DaprTest.StoreApi/Dockerfile
+  daprtest.storeapi.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - daprtest.storeapi
+    network_mode: "service:daprtest.storeapi"
+
+  daprtest.tenantapi:
+    image: ${DOCKER_REGISTRY-}daprtesttenantapi
+    build:
+      context: .
+      dockerfile: DaprTest.TenantApi/Dockerfile
+  daprtest.tenantapi.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - daprtest.tenantapi
+    network_mode: "service:daprtest.tenantapi"
+
   daprtest.orderapi:
     image: ${DOCKER_REGISTRY-}daprtestorderapi
     build:
       context: .
-      dockerfile: DaprTest.OrderApi/Dockerfile
-    
+      dockerfile: DaprTest.OrderApi/Dockerfile   
   daprtest.orderapi.dapr:
     image: "daprio/daprd:latest"
     depends_on:
@@ -31,7 +63,6 @@ services:
     build:
       context: .
       dockerfile: DaprTest.ProductApi/Dockerfile
-
   daprtest.productapi.dapr:
     image: "daprio/daprd:latest"
     depends_on:
@@ -44,7 +75,6 @@ services:
     build:
       context: .
       dockerfile: DaprTest.MemberApi/Dockerfile
-
   daprtest.memberapi.dapr:
     image: "daprio/daprd:latest"
     depends_on:
@@ -79,16 +109,5 @@ services:
 
 
 
-  daprtest.payapi:
-    image: ${DOCKER_REGISTRY-}daprtestpayapi
-    build:
-      context: .
-      dockerfile: DaprTest.PayApi/Dockerfile
 
-
-  daprtest.storeapi:
-    image: ${DOCKER_REGISTRY-}daprteststoreapi
-    build:
-      context: .
-      dockerfile: DaprTest.StoreApi/Dockerfile
 

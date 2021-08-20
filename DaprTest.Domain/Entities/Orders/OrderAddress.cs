@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DaprTest.Domain.Entities.Orders
 {
-    public class OrderAddress : EntityBase
+    public class OrderAddress : EntityTenantBase
     {
         public int MemberId { get; set; }
         public string Address { get; set; }

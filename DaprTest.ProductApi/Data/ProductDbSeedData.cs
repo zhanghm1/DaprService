@@ -18,32 +18,26 @@ namespace DaprTest.ProductApi.Data
         {
            var Products = new List<Product>() {
                 new Product(){
-                    Id=1,
                     Name="iPhone X",
                     Models=new List<ProductModel>(){
                         new ProductModel(){
-                            ProductId=1,
                             Model="64G",
                             Number=100
                         },
                         new ProductModel(){
-                            ProductId=1,
                             Model="128G",
                             Number=100
                         },
                     }
                 },
                 new Product(){
-                    Id=2,
                     Name="iPhone XR",
                     Models=new List<ProductModel>(){
                         new ProductModel(){
-                            ProductId=2,
                             Model="64G",
                             Number=100
                         },
                         new ProductModel(){
-                            ProductId=2,
                             Model="128G",
                             Number=100
                         },

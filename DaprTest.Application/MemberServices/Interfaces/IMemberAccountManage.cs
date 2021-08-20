@@ -10,12 +10,12 @@ namespace DaprTest.Application.MemberServices
     public interface IMemberAccountManage
     {
         Task<bool> Create(Member member,string password);
-        Task<Member> GetMemberById(int id);
+        Task<Member> GetMemberById(string id);
         Task<Member> GetMemberByPhone(string phone);
         Task<Member> GetMemberByEmail(string email);
         Task<Member> GetMemberByUserName(string userName);
         Task<bool> AnyByUserName(string userName);
-        Task<bool> AnyById(int id);
+        Task<bool> AnyById(string id);
         Task<bool> CheckPassword(Member member, string password);
     }
 }

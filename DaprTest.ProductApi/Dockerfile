@@ -3,10 +3,13 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["DaprTest.ProductApi/DaprTest.ProductApi.csproj", "DaprTest.ProductApi/"]
+COPY ["DaprTest.Domain/DaprTest.Domain.csproj", "DaprTest.Domain/"]
+COPY ["DaprTest.Common/DaprTest.Common.csproj", "DaprTest.Common/"]
 RUN dotnet restore "DaprTest.ProductApi/DaprTest.ProductApi.csproj"
 COPY . .
 WORKDIR "/src/DaprTest.ProductApi"

@@ -15,6 +15,10 @@ namespace DaprTest.OrderApi.Data
         }
 
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<OrderReturnRecord> OrderReturnRecords { get; set; }
+
+        
         public DbSet<OrderAddress> OrderAddress { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
