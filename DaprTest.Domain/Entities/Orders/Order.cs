@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DaprTest.Domain
 {
-    public class Order
+    public class Order : EntityBase
     {
-        public int Id { get; set; }
         public int MemberId { get; set; }
         public int ProductId { get; set; }
         public string ProductModel { get; set; }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DaprTest.Domain.Entities
+namespace DaprTest.Domain
 {
     interface IEntityBase
     {

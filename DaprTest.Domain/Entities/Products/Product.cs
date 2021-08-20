@@ -4,18 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DaprTest.Domain
 {
-    public class Product
+    public class Product : EntityBase
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public List<ProductModel> Models { get; set; }
     }
     /// <summary>
     /// 型号
     /// </summary>
-    public class ProductModel
+    public class ProductModel : EntityBase
     {
-        public int Id { get; set; }
         public int ProductId { get; set; }
         public string Model { get; set; }
         public int Number { get; set; }

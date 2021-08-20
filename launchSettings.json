@@ -4,7 +4,6 @@
       "commandName": "DockerCompose",
       "composeLaunchServiceName": "daprtest.ui.mvc",
       "serviceActions": {
-        "daprtest.apigateway": "StartWithoutDebugging",
         "daprtest.identityserver": "StartDebugging",
         "daprtest.memberapi": "StartDebugging",
         "daprtest.memberapi.dapr": "StartWithoutDebugging",

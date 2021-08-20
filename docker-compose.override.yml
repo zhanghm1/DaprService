@@ -92,7 +92,7 @@ services:
       #内部访问又要浏览器跳转，用服务名能内部访问不能跳转，用localhost能跳转，不能内部访问，所以用IP
       - IdentityServerUrl=http://${LOCALHOST_IP}:7000  
       # 服务间的内部http访问可以使用服务名,内部访问更推荐用dapr访问
-      - ApiUrl=http://daprtest.apigateway
+      - ApiUrl=http://daprtest.nginxgateway
     ports:
       - "7001:80"
 
@@ -100,6 +100,21 @@ services:
     ports:
       - "7002:80"
 
-  daprtest.apigateway:
+  daprtest.nginxgateway:
     ports:
       - "6001:80"
+
+
+  daprtest.payapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+
+  daprtest.storeapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+

@@ -71,9 +71,24 @@ services:
       dockerfile: DaprTest.UI.JS/wwwroot/Dockerfile
 
 
-  daprtest.apigateway:
-    image: apigateway
+  daprtest.nginxgateway:
+    image: nginxgateway
     build:
       context: .
-      dockerfile: gateway/apigateway/Dockerfile
+      dockerfile: gateway/nginxgateway/Dockerfile
+
+
+
+  daprtest.payapi:
+    image: ${DOCKER_REGISTRY-}daprtestpayapi
+    build:
+      context: .
+      dockerfile: DaprTest.PayApi/Dockerfile
+
+
+  daprtest.storeapi:
+    image: ${DOCKER_REGISTRY-}daprteststoreapi
+    build:
+      context: .
+      dockerfile: DaprTest.StoreApi/Dockerfile
 
