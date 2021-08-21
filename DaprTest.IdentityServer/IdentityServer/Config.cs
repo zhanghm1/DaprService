@@ -21,9 +21,12 @@ namespace DaprTest.IdentityServer
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("orderapi", "My API"),
-                new ApiScope("productapi", "My API"),
-                new ApiScope("memberapi", "My API"),
+                new ApiScope("orderapi", "订单服务"),
+                new ApiScope("payapi", "支付服务"),
+                new ApiScope("productapi", "商品服务"),
+                new ApiScope("memberapi", "会员服务"),
+                new ApiScope("storeapi", "门店服务"),
+                new ApiScope("tenantapi", "商户服务"),
             };
         public static IEnumerable<Client> Clients(IConfiguration Configuration)
         {
@@ -33,7 +36,7 @@ namespace DaprTest.IdentityServer
             {
                  new Client
                     {
-                        ClientId = "mvc",
+                        ClientId = "admin",
                         ClientSecrets = { new Secret("secret".Sha256()) },
 
                         AllowedGrantTypes = GrantTypes.Code,
@@ -49,13 +52,36 @@ namespace DaprTest.IdentityServer
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
                             "orderapi",
+                            "payapi",
+                            "productapi",
+                            "memberapi",
+                            "storeapi",
+                            "tenantapi",
+                        }
+                    },
+                 new Client
+                    {
+                        ClientId = "productjs",
+                        ClientName = "JavaScript Client",
+                        AllowedGrantTypes = GrantTypes.Code,
+                        RequireClientSecret = false,
+
+                        RedirectUris =           { JSUrl+"/callback.html" },
+                        PostLogoutRedirectUris = { JSUrl+"/index.html" },
+                        AllowedCorsOrigins =     { JSUrl },
+
+                        AllowedScopes = new List<string>
+                        {
+                            IdentityServerConstants.StandardScopes.OpenId,
+                            IdentityServerConstants.StandardScopes.Profile,
+                            "orderapi",
                             "productapi",
                             "memberapi",
                         }
                     },
                  new Client
                     {
-                        ClientId = "js",
+                        ClientId = "tenantjs",
                         ClientName = "JavaScript Client",
                         AllowedGrantTypes = GrantTypes.Code,
                         RequireClientSecret = false,

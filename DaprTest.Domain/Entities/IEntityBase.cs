@@ -7,16 +7,19 @@ using System.Threading.Tasks;
 
 namespace DaprTest.Domain
 {
-    interface IEntityBase
+    public interface IEntityIdBase
     {
         string Id { get; set; }
+    }
+    interface IEntityBase: IEntityIdBase
+    {
         DateTime CreatTime { get; set; }
         DateTime UpdateTime { get; set; }
         bool IsDeleted { get; set; }
     }
     interface IEntityTenantBase
     {
-        string TenantId { get; set; }
+        string TenantCode { get; set; }
     }
     public class EntityBase : IEntityBase
     {
@@ -34,6 +37,6 @@ namespace DaprTest.Domain
     /// </summary>
     public class EntityTenantBase : EntityBase, IEntityTenantBase
     {
-        public string TenantId { get; set; }
+        public string TenantCode { get; set; }
     }
 }

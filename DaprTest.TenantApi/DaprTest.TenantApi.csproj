@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DaprTest.Application\DaprTest.Application.csproj" />
     <ProjectReference Include="..\DaprTest.Domain\DaprTest.Domain.csproj" />
+    <ProjectReference Include="..\DaprTest.EFCore\DaprTest.EFCore.csproj" />
   </ItemGroup>
 
 </Project>

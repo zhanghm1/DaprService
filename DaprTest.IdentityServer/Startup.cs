@@ -1,4 +1,7 @@
-using DaprTest.Application.MemberServices;
+using DaprTest.Application.AccountServices;
+using DaprTest.Domain.Entities.Admins;
+using DaprTest.Domain.Entities.Members;
+using DaprTest.Domain.Entities.Tenants;
 using DaprTest.EFCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -32,9 +35,10 @@ namespace DaprTest.IdentityServer
                 option.Authentication.CookieSameSiteMode = SameSiteMode.Lax;
                 
             })
-                .AddInMemoryClients(Config.Clients(Configuration))
+                //.AddInMemoryClients(Config.Clients(Configuration))
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
+                .AddClientStore<ClientStore>()
                 .AddDeveloperSigningCredential();
 
             //…Ë÷√cookie π≤œÌ
@@ -53,13 +57,26 @@ namespace DaprTest.IdentityServer
                     
                 });
             });
-            string connectionString = Configuration["ConnectionString"];
-            Console.WriteLine(connectionString);
+            string connectionStringMember = Configuration["ConnectionStringMember"];
+            Console.WriteLine(connectionStringMember);
             services.AddDbContext<MemberDbContext>(options => {
-                options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
+                options.UseMySql(connectionStringMember, ServerVersion.Parse("8.0"));
             });
-            services.AddScoped<IMemberAccountManage, DefaultMemberAccountManage>();
-            services.AddScoped<IPasswordHandler, DefaultPasswordHandler>();
+            string connectionStringTenant = Configuration["ConnectionStringTenant"];
+            Console.WriteLine(connectionStringTenant);
+            services.AddDbContext<TenantDbContext>(options => {
+                options.UseMySql(connectionStringTenant, ServerVersion.Parse("8.0"));
+            });
+            string connectionStringAdmin = Configuration["ConnectionStringAdmin"];
+            Console.WriteLine(connectionStringAdmin);
+            services.AddDbContext<AdminDbContext>(options => {
+                options.UseMySql(connectionStringAdmin, ServerVersion.Parse("8.0"));
+            });
+            services.AddScoped<IAccountManage<Member, MemberDbContext>, DefaultAccountManage<Member, MemberDbContext>>();
+            services.AddScoped<IAccountManage<TenantStaff, TenantDbContext>, DefaultAccountManage<TenantStaff, TenantDbContext>>();
+            services.AddScoped<IAccountManage<AdminUser, AdminDbContext>, DefaultAccountManage<AdminUser, AdminDbContext>>();
+
+            services.AddSingleton<IPasswordHandler, DefaultPasswordHandler>();
 
         }
 

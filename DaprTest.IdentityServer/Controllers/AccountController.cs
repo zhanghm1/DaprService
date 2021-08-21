@@ -1,10 +1,14 @@
-﻿using DaprTest.Application.MemberServices;
+﻿using DaprTest.Application.AccountServices;
+using DaprTest.Domain.Entities.Admins;
 using DaprTest.Domain.Entities.Members;
+using DaprTest.Domain.Entities.Tenants;
+using DaprTest.EFCore;
 using IdentityServer4;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +20,28 @@ namespace DaprTest.IdentityServer.Controllers
     public class AccountController : Controller
     {
         private readonly IIdentityServerInteractionService _interaction;
-        private readonly IMemberAccountManage _memberAccountManage;
-        public AccountController(IIdentityServerInteractionService interaction, IMemberAccountManage memberAccountManage)
+        private readonly IAccountManage<Member,MemberDbContext> _memberAccountManage;
+        private readonly IAccountManage<TenantStaff, TenantDbContext> _tenantStaffAccountManage;
+        private readonly IAccountManage<AdminUser, AdminDbContext> _adminUserAccountManage;
+        private readonly AdminDbContext _adminDbContext;
+        private readonly MemberDbContext _memberDbContext;
+        private readonly TenantDbContext _tenantDbContext;
+        public AccountController(IIdentityServerInteractionService interaction
+             , IAccountManage<Member, MemberDbContext> memberAccountManage
+             , IAccountManage<TenantStaff, TenantDbContext> tenantStaffAccountManage
+             , IAccountManage<AdminUser, AdminDbContext> adminUserAccountManage
+             , AdminDbContext adminDbContext
+            , MemberDbContext memberDbContext
+            , TenantDbContext tenantDbContext
+            )
         {
             _interaction = interaction;
             _memberAccountManage = memberAccountManage;
+            _tenantStaffAccountManage = tenantStaffAccountManage;
+            _adminUserAccountManage = adminUserAccountManage;
+            _adminDbContext = adminDbContext;
+            _memberDbContext = memberDbContext;
+            _tenantDbContext = tenantDbContext;
         }
         public IActionResult Login(string returnUrl)
         {
@@ -34,35 +55,71 @@ namespace DaprTest.IdentityServer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult>  Login(LoginInputModel model)
         {
+            bool checkPassword = false;
+            IdentityServerUser user = null;
             var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
 
-            var member = await _memberAccountManage.GetMemberByUserName(model.UserName);
-            if (member==null)
-            { 
-            
+            var client = await _adminDbContext.ApplicationClients.Where(a => a.ClientId == context.Client.ClientId).FirstOrDefaultAsync();
+            switch (client.ClientType)
+            {
+                case ClientType.MemberClient:
+                    {
+                        var account = await _memberDbContext.Members.Where(a=>a.UserName==model.UserName&& a.TenantCode== client.TenantCode).FirstOrDefaultAsync();
+                        if (account == null)
+                        {
+
+                        }
+                        checkPassword = _memberAccountManage.CheckPassword(account, model.Password);
+                        user = new IdentityServerUser(account.Id.ToString())
+                        {
+                            DisplayName = account.UserName
+                        };
+                    }
+                    break;
+                case ClientType.TenantClient:
+                    {
+                        var account = await _tenantDbContext.TenantStaffs.Where(a=>a.UserName==model.UserName && a.TenantCode == client.TenantCode).FirstOrDefaultAsync();
+                        if (account == null)
+                        {
+
+                        }
+                        checkPassword = _tenantStaffAccountManage.CheckPassword(account, model.Password);
+                        user = new IdentityServerUser(account.Id.ToString())
+                        {
+                            DisplayName = account.UserName
+                        };
+                    }
+                    break;
+                case ClientType.AdminClient:
+                    {
+                        var account = await _adminUserAccountManage.GetAccountByUserName(model.UserName);
+                        if (account == null)
+                        {
+
+                        }
+                        checkPassword = _adminUserAccountManage.CheckPassword(account, model.Password);
+                        user = new IdentityServerUser(account.Id.ToString())
+                        {
+                            DisplayName = account.UserName
+                        };
+                    }
+                    break;
             }
-            if (await _memberAccountManage.CheckPassword(member, model.Password))
+            
+            if (checkPassword)
             {
                 AuthenticationProperties props = new AuthenticationProperties
                 {
                     IsPersistent = true,
                     ExpiresUtc = DateTimeOffset.UtcNow.AddDays(3)
                 };
-                var isuser = new IdentityServerUser(member.Id.ToString())
-                {
-                    DisplayName = member.UserName
-                };
-
-
-                await HttpContext.SignInAsync(isuser, props);
+                await HttpContext.SignInAsync(user, props);
 
                 if (context != null)
                 {
                     return Redirect(model.ReturnUrl);
                 }
             }
-
-            
             return View();
         }
 

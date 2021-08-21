@@ -18,10 +18,10 @@ document.getElementById("login").addEventListener("click", login, false);
 document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
 
-var LOCALHOST_IP = "192.168.1.238";
+var LOCALHOST_IP = "192.168.0.109";
 var config = {
     authority: "http://" + LOCALHOST_IP+":7000",
-    client_id: "js",
+    client_id: "TenantManage",
     redirect_uri: "http://" + LOCALHOST_IP +":7002/callback.html",
     response_type: "code",
     scope:"openid profile orderapi productapi memberapi",

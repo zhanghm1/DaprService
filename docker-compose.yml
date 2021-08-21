@@ -88,11 +88,11 @@ services:
       context: .
       dockerfile: DaprTest.IdentityServer/Dockerfile
 
-  daprtest.ui.mvc:
-    image: ${DOCKER_REGISTRY-}daprtestuimvc
+  daprtest.ui.admin:
+    image: ${DOCKER_REGISTRY-}daprtestuiadmin
     build:
       context: .
-      dockerfile: DaprTest.UI.MVC/Dockerfile
+      dockerfile: DaprTest.UI.Admin/Dockerfile
 
   daprtest.ui.js:
     image: ${DOCKER_REGISTRY-}uijs

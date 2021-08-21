@@ -40,7 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{0DC5ECEB-625
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprTest.IdentityServer", "DaprTest.IdentityServer\DaprTest.IdentityServer.csproj", "{8A8063E6-F3F0-441F-AA84-28D243748B5C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprTest.UI.MVC", "DaprTest.UI.MVC\DaprTest.UI.MVC.csproj", "{156029BC-9F60-49F6-9079-A700306BAF8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprTest.UI.Admin", "DaprTest.UI.Admin\DaprTest.UI.Admin.csproj", "{156029BC-9F60-49F6-9079-A700306BAF8A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprTest.UI.JS", "DaprTest.UI.JS\DaprTest.UI.JS.csproj", "{2FE3CF1D-19BF-459E-912D-6B07E4EF0EE9}"
 EndProject
@@ -57,7 +57,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprTest.PayApi", "DaprTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprTest.StoreApi", "DaprTest.StoreApi\DaprTest.StoreApi.csproj", "{94B97886-0B6C-4894-A11C-AD396A6C0770}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaprTest.TenantApi", "DaprTest.TenantApi\DaprTest.TenantApi.csproj", "{CA14657E-F5CF-482E-AB82-079F537EFCC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DaprTest.TenantApi", "DaprTest.TenantApi\DaprTest.TenantApi.csproj", "{CA14657E-F5CF-482E-AB82-079F537EFCC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

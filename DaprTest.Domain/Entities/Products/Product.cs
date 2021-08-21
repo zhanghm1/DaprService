@@ -20,7 +20,7 @@ namespace DaprTest.Domain
         [Column(TypeName = "decimal(18, 2)")]
         public decimal UnitPrice { get; set; }
     }
-    public class ProductStore
+    public class ProductStore : EntityTenantBase
     {
         public string ProductId { get; set; }
         public string StoreId { get; set; }
@@ -28,7 +28,7 @@ namespace DaprTest.Domain
         public decimal UnitPrice { get; set; }
         public int Number { get; set; }
     }
-    public class ProductModelStore
+    public class ProductModelStore : EntityTenantBase
     {
         public string ProductId { get; set; }
         public string StoreId { get; set; }

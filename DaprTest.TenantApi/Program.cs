@@ -1,3 +1,4 @@
+using DaprTest.EFCore;
 using DaprTest.TenantApi.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,9 @@ namespace DaprTest.TenantApi
 
                     var context = services.GetRequiredService<TenantDbContext>();
                     await context.Database.MigrateAsync();
+
+                    var seedData = services.GetRequiredService<TenantDbSeedData>();
+                    await seedData.Init();
                 }
 
                 host.Run();

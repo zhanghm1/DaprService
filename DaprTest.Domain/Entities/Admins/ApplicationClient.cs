@@ -14,6 +14,7 @@ namespace DaprTest.Domain.Entities.Admins
         public string RedirectUris { get; set; }
         public string LogoutRedirectUris { get; set; }
         public string AllowedScopes { get; set; }
+        public bool RequireClientSecret { get; set; } = true;
         public ClientType ClientType { get; set; }
     }
 

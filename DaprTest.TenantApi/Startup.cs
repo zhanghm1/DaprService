@@ -1,3 +1,6 @@
+using DaprTest.Application.AccountServices;
+using DaprTest.Domain.Entities.Tenants;
+using DaprTest.EFCore;
 using DaprTest.TenantApi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +43,9 @@ namespace DaprTest.TenantApi
                 options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
             });
 
+            services.AddScoped<IAccountManage<TenantStaff, TenantDbContext>, DefaultAccountManage<TenantStaff, TenantDbContext>>();
+            services.AddSingleton<IPasswordHandler, DefaultPasswordHandler>();
+            services.AddScoped<TenantDbSeedData>();
             // accepts any access token issued by identity server
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>

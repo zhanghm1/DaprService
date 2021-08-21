@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DaprTest.Domain.Entities
 {
-    public interface IUserBase
+    public interface IUserBase: IEntityIdBase
     {
         string UserName { get; set; }
         string Name { get; set; }

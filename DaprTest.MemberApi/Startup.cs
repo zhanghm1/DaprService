@@ -1,4 +1,5 @@
-using DaprTest.Application.MemberServices;
+using DaprTest.Application.AccountServices;
+using DaprTest.Domain.Entities.Members;
 using DaprTest.EFCore;
 using DaprTest.MemberApi.Data;
 using Microsoft.AspNetCore.Builder;
@@ -42,7 +43,7 @@ namespace DaprTest.MemberApi
                 options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
             });
             services.AddScoped<MemberDbSeedData>();
-            services.AddScoped<IMemberAccountManage, DefaultMemberAccountManage>();
+            services.AddScoped<IAccountManage<Member, MemberDbContext>, DefaultAccountManage<Member, MemberDbContext>>();
             services.AddScoped<IPasswordHandler, DefaultPasswordHandler> ();
 
             // accepts any access token issued by identity server

@@ -2,7 +2,7 @@
   "profiles": {
     "Docker Compose": {
       "commandName": "DockerCompose",
-      "composeLaunchServiceName": "daprtest.ui.mvc",
+      "composeLaunchServiceName": "daprtest.ui.admin",
       "serviceActions": {
         "daprtest.identityserver": "StartDebugging",
         "daprtest.memberapi": "StartDebugging",
@@ -12,11 +12,18 @@
         "daprtest.productapi": "StartDebugging",
         "daprtest.productapi.dapr": "StartWithoutDebugging",
         "daprtest.ui.js": "StartWithoutDebugging",
-        "daprtest.ui.mvc": "StartDebugging",
         "mysql": "StartWithoutDebugging",
         "rabbitmq": "StartWithoutDebugging",
         "redis": "StartWithoutDebugging",
-        "zipkin": "StartWithoutDebugging"
+        "zipkin": "StartWithoutDebugging",
+        "daprtest.nginxgateway": "StartWithoutDebugging",
+        "daprtest.payapi": "StartDebugging",
+        "daprtest.payapi.dapr": "StartWithoutDebugging",
+        "daprtest.storeapi": "StartDebugging",
+        "daprtest.storeapi.dapr": "StartWithoutDebugging",
+        "daprtest.tenantapi": "StartDebugging",
+        "daprtest.tenantapi.dapr": "StartWithoutDebugging",
+        "daprtest.ui.admin": "StartDebugging"
       },
       "composeLaunchAction": "LaunchBrowser",
       "commandVersion": "1.0",
