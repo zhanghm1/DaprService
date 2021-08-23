@@ -1,4 +1,4 @@
-﻿using DaprTest.Domain.Entities;
+﻿using DaprTest.Domain;
 using DaprTest.EFCore;
 using Microsoft.EntityFrameworkCore;
 using System;

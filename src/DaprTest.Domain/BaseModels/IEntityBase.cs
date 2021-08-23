@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DaprTest.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace DaprTest.Domain
         /// ID,统一小写
         /// </summary>
         [Key]
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set;} = SequentialGuid.Instance.Create( SequentialGuid.SequentialGuidDatabaseType.MySql).ToString().ToLower();
         public DateTime CreatTime { get; set; } = DateTime.Now;
         public DateTime UpdateTime { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }

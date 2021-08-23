@@ -1,6 +1,5 @@
 ﻿using DaprTest.Application.AccountServices;
 using DaprTest.Domain;
-using DaprTest.Domain.BaseModels;
 using DaprTest.Domain.Data;
 using DaprTest.Domain.Entities.Admins;
 using DaprTest.Domain.Entities.Members;

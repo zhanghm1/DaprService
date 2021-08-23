@@ -1,4 +1,4 @@
-﻿using DaprTest.Domain.Entities;
+﻿using DaprTest.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
