@@ -45,7 +45,7 @@ namespace DaprTest.IdentityServer.Controllers
         }
         public IActionResult Login(string returnUrl)
         {
-            LoginInputModel resp = new LoginInputModel()
+            LoginModel resp = new LoginModel()
             {
                 ReturnUrl = returnUrl
             };
@@ -72,22 +72,46 @@ namespace DaprTest.IdentityServer.Controllers
                         checkPassword = _memberAccountManage.CheckPassword(account, model.Password);
                         user = new IdentityServerUser(account.Id.ToString())
                         {
-                            DisplayName = account.UserName
+                            DisplayName = account.UserName,
+                            AdditionalClaims = new List<Claim>(){
+                                new Claim("ClientType","MemberClient"),
+                            },
                         };
                     }
                     break;
                 case ClientType.TenantClient:
                     {
-                        var account = await _tenantDbContext.TenantStaffs.Where(a=>a.UserName==model.UserName && a.TenantCode == client.TenantCode).FirstOrDefaultAsync();
-                        if (account == null)
+                        if (string.IsNullOrEmpty(model.TenantCode))//商户平台登录需要选择需要登录的平台
                         {
-
+                            var staffs = await _tenantDbContext.TenantStaffs.Where(a => a.UserName == model.UserName).Select(a=>a.TenantCode).ToListAsync();
+                            if (staffs != null)
+                            {
+                                LoginModel resp = new LoginModel();
+                                resp.Tenants = await _adminDbContext.TenantInfos.Where(a => staffs.Contains(a.TenantCode)).Select(a => new LoginTenantModel()
+                                {
+                                    Name = a.Name,
+                                    TenantCode = a.TenantCode
+                                }).ToListAsync();
+                                return View(resp);
+                            }
                         }
-                        checkPassword = _tenantStaffAccountManage.CheckPassword(account, model.Password);
-                        user = new IdentityServerUser(account.Id.ToString())
+                        else
                         {
-                            DisplayName = account.UserName
-                        };
+                            var account = await _tenantDbContext.TenantStaffs.Where(a => a.UserName == model.UserName && a.TenantCode == model.TenantCode).FirstOrDefaultAsync();
+                            if (account == null)
+                            {
+
+                            }
+                            checkPassword = _tenantStaffAccountManage.CheckPassword(account, model.Password);
+                            user = new IdentityServerUser(account.Id.ToString())
+                            {
+                                DisplayName = account.UserName,
+                                AdditionalClaims = new List<Claim>(){
+                                new Claim("ClientType","TenantClient"),
+                            },
+                            };
+                        }
+                        
                     }
                     break;
                 case ClientType.AdminClient:
@@ -100,12 +124,15 @@ namespace DaprTest.IdentityServer.Controllers
                         checkPassword = _adminUserAccountManage.CheckPassword(account, model.Password);
                         user = new IdentityServerUser(account.Id.ToString())
                         {
-                            DisplayName = account.UserName
+                            DisplayName = account.UserName,
+                            AdditionalClaims = new List<Claim>(){
+                                new Claim("ClientType","AdminClient"),
+                            },
                         };
                     }
                     break;
             }
-            
+
             if (checkPassword)
             {
                 AuthenticationProperties props = new AuthenticationProperties
@@ -113,6 +140,9 @@ namespace DaprTest.IdentityServer.Controllers
                     IsPersistent = true,
                     ExpiresUtc = DateTimeOffset.UtcNow.AddDays(3)
                 };
+
+                var aaa = user.CreatePrincipal();
+
                 await HttpContext.SignInAsync(user, props);
 
                 if (context != null)
@@ -129,12 +159,27 @@ namespace DaprTest.IdentityServer.Controllers
             return View();
         }
     }
-
     public class LoginInputModel
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string ReturnUrl { get; set; }
+        public string TenantCode { get; set; }
+        public bool RememberLogin { get; set; }
+    }
+    public class LoginModel
     { 
         public string UserName { get; set; }
         public string Password { get; set; }
         public string ReturnUrl { get; set; }
+        public string TenantCode { get; set; }
         public bool RememberLogin { get; set; }
+        
+        public List<LoginTenantModel> Tenants { get; set; }
+    }
+    public class LoginTenantModel
+    {
+        public string Name { get; set; }
+        public string TenantCode { get; set; }
     }
 }

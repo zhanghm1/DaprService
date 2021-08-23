@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DaprTest.EFCore.Admins.migrations
 {
     [DbContext(typeof(AdminDbContext))]
-    [Migration("20210821084218_appclient_secertfalse")]
-    partial class appclient_secertfalse
+    [Migration("20210823081814_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,9 @@ namespace DaprTest.EFCore.Admins.migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("AllowedCorsOrigins")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("AllowedScopes")
                         .HasColumnType("longtext");

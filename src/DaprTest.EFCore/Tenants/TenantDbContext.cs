@@ -15,7 +15,7 @@ namespace DaprTest.EFCore
         }
 
         public DbSet<TenantStaff> TenantStaffs { get; set; }
-
+        public DbSet<StoreInfo> StoreInfos { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //add-migration init -Context TenantDbContext -OutputDir Tenants/migrations

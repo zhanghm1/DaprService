@@ -54,8 +54,11 @@ namespace DaprTest.EFCore.Admins.migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LogoutRedirectUris = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    AllowedCorsOrigins = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     AllowedScopes = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    RequireClientSecret = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ClientType = table.Column<int>(type: "int", nullable: false),
                     CreatTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),

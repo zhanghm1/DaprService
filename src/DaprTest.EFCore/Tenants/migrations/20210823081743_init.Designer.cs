@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DaprTest.EFCore.Tenants.migrations
 {
     [DbContext(typeof(TenantDbContext))]
-    [Migration("20210821071603_init")]
+    [Migration("20210823081743_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,6 +18,40 @@ namespace DaprTest.EFCore.Tenants.migrations
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.9");
+
+            modelBuilder.Entity("DaprTest.Domain.Entities.Tenants.StoreInfo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TenantCode")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StoreInfos");
+                });
 
             modelBuilder.Entity("DaprTest.Domain.Entities.Tenants.TenantStaff", b =>
                 {
@@ -43,6 +77,9 @@ namespace DaprTest.EFCore.Tenants.migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("StoreId")
                         .HasColumnType("longtext");
 
                     b.Property<string>("TenantCode")

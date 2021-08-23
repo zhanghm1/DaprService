@@ -33,6 +33,8 @@ namespace DaprTest.TenantApi.Data
                         Email = item.Email,
                         Name = item.Name,
                         PhoneNumber = item.PhoneNumber,
+                        TenantCode=item.TenantCode,
+                        StoreId=item.StoreId
                     };
                     await _accountManage.Create(member, item.Password);
                 }

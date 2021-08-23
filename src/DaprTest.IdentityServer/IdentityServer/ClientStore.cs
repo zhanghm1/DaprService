@@ -29,6 +29,7 @@ namespace DaprTest.IdentityServer
                 AllowedGrantTypes = GrantTypes.Code,
                 RedirectUris = { dbClient.RedirectUris },
                 PostLogoutRedirectUris = { dbClient.LogoutRedirectUris },
+                AllowedCorsOrigins= { dbClient.AllowedCorsOrigins },
                 AllowedScopes = dbClient.AllowedScopes.Split(" "),
             };
 

@@ -25,17 +25,6 @@ services:
       - daprtest.payapi
     network_mode: "service:daprtest.payapi"
 
-  daprtest.storeapi:
-    image: ${DOCKER_REGISTRY-}daprteststoreapi
-    build:
-      context: .
-      dockerfile: DaprTest.StoreApi/Dockerfile
-  daprtest.storeapi.dapr:
-    image: "daprio/daprd:latest"
-    depends_on:
-      - daprtest.storeapi
-    network_mode: "service:daprtest.storeapi"
-
   daprtest.tenantapi:
     image: ${DOCKER_REGISTRY-}daprtesttenantapi
     build:
@@ -81,6 +70,11 @@ services:
       - daprtest.memberapi
     network_mode: "service:daprtest.memberapi"
 
+  daprtest.nginxgateway:
+    image: daprtest.nginxgateway
+    build:
+      context: .
+      dockerfile: gateway/nginxgateway/Dockerfile
 
   daprtest.identityserver:
     image: ${DOCKER_REGISTRY-}daprtestidentityserver
@@ -94,18 +88,18 @@ services:
       context: .
       dockerfile: DaprTest.UI.Admin/Dockerfile
 
-  daprtest.ui.js:
-    image: ${DOCKER_REGISTRY-}uijs
+  daprtest.ui.tenant:
+    image: daprtest.ui.tenant
     build:
       context: .
-      dockerfile: DaprTest.UI.JS/wwwroot/Dockerfile
+      dockerfile: DaprTest.UI.Tenant/wwwroot/Dockerfile
 
-
-  daprtest.nginxgateway:
-    image: nginxgateway
+  daprtest.ui.defaulttenantweb:
+    image: daprtest.ui.defaulttenantweb
     build:
       context: .
-      dockerfile: gateway/nginxgateway/Dockerfile
+      dockerfile: DaprTest.UI.DefaultTenantWeb/wwwroot/Dockerfile
+
 
 
 

@@ -16,6 +16,8 @@ namespace DaprTest.Domain.Data
                     Name="Staff1",
                     Password="123456",
                     PhoneNumber="130xxxxxxxx",
+                    StoreId=StoreInfoData.DefaultStoreId,
+                    TenantCode=TenantInfoData.DefaultTenantCode,
                 },
             };
     }

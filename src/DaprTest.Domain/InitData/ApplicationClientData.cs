@@ -38,6 +38,7 @@ namespace DaprTest.Domain.Data
                     RequireClientSecret=false,
                     RedirectUris="/callback.html",
                     LogoutRedirectUris="/index.html",
+                    AllowedCorsOrigins="",
                     AllowedScopes="openid profile orderapi productapi memberapi payapi storeapi tenantapi",
                 },
                 new ApplicationClient()
@@ -51,6 +52,7 @@ namespace DaprTest.Domain.Data
                     TenantCode=TenantInfoData.DefaultTenantCode,
                     RedirectUris="/callback.html",
                     LogoutRedirectUris="/index.html",
+                    AllowedCorsOrigins="",
                     AllowedScopes="openid profile orderapi productapi memberapi payapi storeapi",
 
                 },

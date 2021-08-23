@@ -11,7 +11,6 @@
         "daprtest.orderapi.dapr": "StartWithoutDebugging",
         "daprtest.productapi": "StartDebugging",
         "daprtest.productapi.dapr": "StartWithoutDebugging",
-        "daprtest.ui.js": "StartWithoutDebugging",
         "mysql": "StartWithoutDebugging",
         "rabbitmq": "StartWithoutDebugging",
         "redis": "StartWithoutDebugging",
@@ -19,11 +18,10 @@
         "daprtest.nginxgateway": "StartWithoutDebugging",
         "daprtest.payapi": "StartDebugging",
         "daprtest.payapi.dapr": "StartWithoutDebugging",
-        "daprtest.storeapi": "StartDebugging",
-        "daprtest.storeapi.dapr": "StartWithoutDebugging",
         "daprtest.tenantapi": "StartDebugging",
         "daprtest.tenantapi.dapr": "StartWithoutDebugging",
-        "daprtest.ui.admin": "StartDebugging"
+        "daprtest.ui.admin": "StartDebugging",
+        "daprtest.ui.tenant": "StartWithoutDebugging"
       },
       "composeLaunchAction": "LaunchBrowser",
       "commandVersion": "1.0",

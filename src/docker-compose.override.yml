@@ -39,21 +39,6 @@ services:
       - "./dapr/components/:/components"
       - "./dapr/configuration/:/configuration"
 
-  daprtest.storeapi:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=store_db;user ID=root;Password=123456;
-      - IdentityServerUrl=http://${LOCALHOST_IP}:7000
-  daprtest.storeapi.dapr:
-    command: [ "./daprd",
-    "-app-id", "storeapi",
-    "-app-port", "80",
-    "-components-path", "/components",
-    "-config", "/configuration/eshop-config.yaml" ]
-    volumes:
-      - "./dapr/components/:/components"
-      - "./dapr/configuration/:/configuration"
-
 
   daprtest.tenantapi:
     environment:
@@ -120,6 +105,9 @@ services:
       - "./dapr/components/:/components"
       - "./dapr/configuration/:/configuration"
 
+  daprtest.nginxgateway:
+    ports:
+      - "6001:80"
 
   daprtest.identityserver:
     environment:
@@ -144,13 +132,14 @@ services:
     ports:
       - "7001:80"
 
-  daprtest.ui.js:
+  daprtest.ui.tenant:
     ports:
       - "7002:80"
 
-  daprtest.nginxgateway:
+  daprtest.ui.defaulttenantweb:
     ports:
-      - "6001:80"
+      - "7003:80"
+
 
 
 

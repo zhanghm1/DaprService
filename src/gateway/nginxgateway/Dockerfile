@@ -21,9 +21,6 @@ RUN echo $'server {                                 \n\
     location /api/tenant/ {                         \n\
         proxy_pass   http://daprtest.tenantapi/;    \n\
     }                                               \n\
-    location /api/store/ {                          \n\
-        proxy_pass   http://daprtest.storeapi/;     \n\
-    }                                               \n\
 }                                                   \n\
 ' >/etc/nginx/conf.d/default.conf
 

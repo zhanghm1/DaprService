@@ -1,4 +1,5 @@
 ﻿using DaprTest.Domain;
+using DaprTest.Domain.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace DaprTest.ProductApi.Data
         {
            var Products = new List<Product>() {
                 new Product(){
+                    TenantCode=TenantInfoData.DefaultTenantCode,
                     Name="iPhone X",
                     Models=new List<ProductModel>(){
                         new ProductModel(){
@@ -31,13 +33,16 @@ namespace DaprTest.ProductApi.Data
                     }
                 },
                 new Product(){
+                    TenantCode=TenantInfoData.DefaultTenantCode,
                     Name="iPhone XR",
                     Models=new List<ProductModel>(){
                         new ProductModel(){
+                            TenantCode=TenantInfoData.DefaultTenantCode,
                             Model="64G",
                             Number=100
                         },
                         new ProductModel(){
+                            TenantCode=TenantInfoData.DefaultTenantCode,
                             Model="128G",
                             Number=100
                         },

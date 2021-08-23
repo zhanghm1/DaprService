@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DaprTest.EFCore.Members.migrations
 {
     [DbContext(typeof(MemberDbContext))]
-    [Migration("20210821071057_init")]
+    [Migration("20210823081652_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

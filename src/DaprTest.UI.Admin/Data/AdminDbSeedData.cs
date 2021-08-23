@@ -46,7 +46,7 @@ namespace DaprTest.UI.Admin.Data
                     string url = Configuration[item.ClientId + "Url"];
                     item.RedirectUris = url + item.RedirectUris;
                     item.LogoutRedirectUris = url + item.LogoutRedirectUris;
-
+                    item.AllowedCorsOrigins = url;
                     _adminDbContext.ApplicationClients.Add(item);
                 }
             }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DaprTest.Domain.Entities.Stores
+namespace DaprTest.Domain.Entities.Tenants
 {
     public class StoreInfo:EntityTenantBase
     {
