@@ -168,7 +168,19 @@ namespace DaprTest.IdentityServer.Controllers
         public bool RememberLogin { get; set; }
     }
     public class LoginModel
-    { 
+    {
+        public LoginModel()
+        { 
+        
+        }
+        public LoginModel(LoginInputModel loginInput)
+        {
+            UserName = loginInput.UserName;
+            Password = loginInput.Password;
+            ReturnUrl = loginInput.ReturnUrl;
+            TenantCode = loginInput.TenantCode;
+            RememberLogin = loginInput.RememberLogin;
+        }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string ReturnUrl { get; set; }
