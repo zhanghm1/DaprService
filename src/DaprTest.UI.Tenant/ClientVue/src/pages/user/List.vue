@@ -5,7 +5,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import  staffService  from '../../services/staff/staffService'
-import  {StaffItemDto}  from '../../services/staff/dtos'
 export default defineComponent({
   name: 'UserList',
   created(){

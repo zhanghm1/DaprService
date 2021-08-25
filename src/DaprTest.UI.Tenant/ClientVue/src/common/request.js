@@ -24,24 +24,24 @@ axios.interceptors.response.use(function (response) {
 });
 
 const proxyAxios={
-    async get<T=any>(url:string,params:any){
+    async get(url,params){
        let resp = await axios.get(this.paramsToUrl(url,params));
-       return resp.data as T;
+       return resp.data;
     },
-    async delete<T=any>(url:string,params:any){
+    async delete(url,params){
         let resp =  await axios.delete(this.paramsToUrl(url,params));
-        return resp.data as T;
+        return resp.data;
     },
-    async post<T=any>(url:string,data:any){
+    async post(url,data){
         let resp =  await axios.post(url,data)
-        return resp.data as T;
+        return resp.data;
     },
-    async put<T=any>(url:string,data:any){
+    async put(url,data){
         let resp =  await axios.put(url,data)
-        return resp.data as T;
+        return resp.data;
     },
     
-    paramsToUrl(url:string,params:any){
+    paramsToUrl(url,params){
         if(params){
             for(let key in params){
                 if(url.indexOf("?")==-1){
