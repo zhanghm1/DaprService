@@ -3,6 +3,7 @@ using DaprTest.EFCore;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,8 @@ namespace DaprTest.IdentityServer
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             string clientId = context.Client.ClientId;
-            var client = _adminDbContext.ApplicationClients.Where(a => a.ClientId == clientId).FirstOrDefault();
+            var client = await _adminDbContext.ApplicationClients.Where(a => a.ClientId == clientId).FirstOrDefaultAsync();
             List<Claim> claims = new List<Claim>();
-
-            //claims = userPermissions.ApiPermission.Where(a => !userPermissions.NotApiPermission.Contains(a)).Select(a => new Claim(ClaimNames.ApiPermission, a)).ToList();
 
             claims.Add(new Claim("ClientType", client.ClientType.ToString()));
             context.IssuedClaims = claims;
@@ -34,7 +33,7 @@ namespace DaprTest.IdentityServer
         {
             string clientType = context.Subject?.Claims.FirstOrDefault(a => a.Type == "ClientType")?.Value;
             string clientId = context.Client.ClientId;
-            var client = _adminDbContext.ApplicationClients.Where(a => a.ClientId == clientId).FirstOrDefault();
+            var client =await _adminDbContext.ApplicationClients.Where(a => a.ClientId == clientId).FirstOrDefaultAsync();
             if (client.ClientType.ToString() != clientType)
             {
                 context.IsActive = false;

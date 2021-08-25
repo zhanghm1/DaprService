@@ -4,8 +4,7 @@
       :uniqueOpened="true"
       default-active="2"
       class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
+     
       router
       background-color="#545c64"
       text-color="#fff"
@@ -43,18 +42,12 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'Menu',
-  props: {
-    msg: {
-      type: String,
-      required: true
-    }
-  },
   created(){
     this.getMenuData();
   },
   methods:{
     getMenuData(){
-      this.$http.get("/api/Statistic/Statistic/MessageCount");
+      
     }
   }
 })
