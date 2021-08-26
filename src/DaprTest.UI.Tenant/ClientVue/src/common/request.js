@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5102';
-axios.defaults.headers.common['Token'] = "OTkyYTc0Y2JkZmY0NGFkNzgyMjVkODRiNzUwOTAxZDA%253D";
+axios.defaults.baseURL = window.apiurl;
+axios.defaults.headers.common['Authorization'] = "Bearer "+localStorage.getItem("access_token");
 axios.defaults.headers.post['Content-Type'] = 'application/josn';
 
 axios.interceptors.request.use(function (config) {

@@ -12,18 +12,27 @@
   </el-container>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script >
 import Menu from '../components/Menu.vue'
 import Header from '../components/Header.vue'
-
-export default defineComponent({
+import oidcUserManager from '../common/oidc'
+export default {
   name: 'App',
   components: {
     Menu,
     Header
+  },
+  created(){
+    oidcUserManager.getUser().then((user)=> {
+        if (user) {
+            console.log("User:",user);
+            this.$router.push("/index");
+        }else {
+            oidcUserManager.signinRedirect();
+        }
+    });
   }
-})
+}
 </script>
 
 <style scoped>

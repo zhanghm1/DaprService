@@ -92,7 +92,7 @@ services:
     image: daprtest.ui.tenant
     build:
       context: .
-      dockerfile: DaprTest.UI.Tenant/wwwroot/Dockerfile
+      dockerfile: DaprTest.UI.Tenant/ClientVue/dist/Dockerfile
 
   daprtest.ui.defaulttenantweb:
     image: daprtest.ui.defaulttenantweb

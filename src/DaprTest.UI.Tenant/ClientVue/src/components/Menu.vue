@@ -26,7 +26,7 @@
           <el-menu-item index="1-4-1">选项1</el-menu-item>
         </el-submenu>
       </el-submenu>
-      <el-menu-item index="/user/list" >
+      <el-menu-item index="/staff/list" >
         <i class="el-icon-menu"></i>
         <template #title>导航二</template>
       </el-menu-item>
@@ -38,9 +38,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
+<script >
+export default {
   name: 'Menu',
   created(){
     this.getMenuData();
@@ -50,7 +49,7 @@ export default defineComponent({
       
     }
   }
-})
+}
 </script>
 
 <style scoped>

@@ -1,14 +1,17 @@
 <template>
-  <div> Header</div>
+  <div>
+    
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
+<script >
+import  staffService  from '../services/staffService'
+export default {
   name: 'Header',
-  
-})
+  async created(){
+    let current = await staffService.getStaffInfo();
+  }
+}
 </script>
 
 <style>
