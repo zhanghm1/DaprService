@@ -4,12 +4,4 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="wwwroot\Dockerfile" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\Dockerfile" />
-  </ItemGroup>
-
 </Project>

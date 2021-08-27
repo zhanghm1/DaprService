@@ -50,8 +50,8 @@ namespace DaprTest.Domain.Data
                     RequireClientSecret=false,
                     ClientType= ClientType.MemberClient,
                     TenantCode=TenantInfoData.DefaultTenantCode,
-                    RedirectUris="/callback.html",
-                    LogoutRedirectUris="/index.html",
+                    RedirectUris="/#/logincallback",
+                    LogoutRedirectUris="/#/login",
                     AllowedCorsOrigins="",
                     AllowedScopes="openid profile orderapi productapi memberapi payapi storeapi",
 

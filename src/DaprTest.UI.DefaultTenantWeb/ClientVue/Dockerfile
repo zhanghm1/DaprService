@@ -1,10 +1,10 @@
 FROM node as build-stage
 WORKDIR /app
-COPY ["DaprTest.UI.Tenant/ClientVue/package*.json", "./"] 
+COPY ["DaprTest.UI.DefaultTenantWeb/ClientVue/package*.json", "./"] 
 # RUN npm config set registry https://registry.npm.taobao.org
 RUN npm install
 COPY . .
-COPY ["DaprTest.UI.Tenant/ClientVue", "./"] 
+COPY ["DaprTest.UI.DefaultTenantWeb/ClientVue", "./"] 
 RUN npm run build
 
 
