@@ -1,24 +1,25 @@
 ﻿using DaprTest.Domain;
-using DaprTest.Domain.Entities.Tenants;
+using DaprTest.Domain.Entities.Members;
+using DaprTest.Domain.Entities.Orders;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DaprTest.EFCore
+namespace DaprTest.MemberApi.Data
 {
-    public class TenantDbContext : DbContext
+    public class MemberDbContext : DbContext
     {
-        public TenantDbContext(DbContextOptions<TenantDbContext> options): base(options)
+        public MemberDbContext(DbContextOptions<MemberDbContext> options): base(options)
         {
         }
 
-        public DbSet<TenantStaff> TenantStaffs { get; set; }
-        public DbSet<StoreInfo> StoreInfos { get; set; }
+        public DbSet<Member> Members { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //add-migration init -Context TenantDbContext -OutputDir Tenants/migrations
+            //add-migration init -Context MemberDbContext -OutputDir Members/migrations
             //optionsBuilder.LogTo(Console.WriteLine);
             base.OnConfiguring(optionsBuilder);
         }

@@ -21,7 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DaprTest.Application\DaprTest.Application.csproj" />
     <ProjectReference Include="..\DaprTest.Domain\DaprTest.Domain.csproj" />
-    <ProjectReference Include="..\DaprTest.EFCore\DaprTest.EFCore.csproj" />
   </ItemGroup>
 
 </Project>

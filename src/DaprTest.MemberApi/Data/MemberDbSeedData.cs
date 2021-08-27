@@ -1,9 +1,7 @@
 ﻿using DaprTest.Application.AccountServices;
 using DaprTest.Domain;
 using DaprTest.Domain.Data;
-using DaprTest.Domain.Entities.Admins;
 using DaprTest.Domain.Entities.Members;
-using DaprTest.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -4,10 +4,17 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\DaprTest.Common\DaprTest.Common.csproj" />
     <ProjectReference Include="..\DaprTest.Domain\DaprTest.Domain.csproj" />
-    <ProjectReference Include="..\DaprTest.EFCore\DaprTest.EFCore.csproj" />
   </ItemGroup>
 
 </Project>

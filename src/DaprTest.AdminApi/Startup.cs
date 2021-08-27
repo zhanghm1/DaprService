@@ -1,6 +1,6 @@
+using DaprTest.AdminApi.Data;
 using DaprTest.Application.AccountServices;
-using DaprTest.Domain.Entities.Members;
-using DaprTest.MemberApi.Data;
+using DaprTest.Domain.Entities.Admins;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DaprTest.MemberApi
+namespace DaprTest.AdminApi
 {
     public class Startup
     {
@@ -31,19 +31,20 @@ namespace DaprTest.MemberApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddDapr();
+            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MemberApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DaprTest.AdminApi", Version = "v1" });
             });
+
             string connectionString = Configuration["ConnectionString"];
             Console.WriteLine(connectionString);
-            services.AddDbContext<MemberDbContext>(options => {
+            services.AddDbContext<AdminDbContext>(options => {
                 options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
             });
-            services.AddScoped<MemberDbSeedData>();
-            services.AddScoped<IAccountManage<Member, MemberDbContext>, DefaultAccountManage<Member, MemberDbContext>>();
-            services.AddScoped<IPasswordHandler, DefaultPasswordHandler> ();
+            services.AddScoped<AdminDbSeedData>();
+            services.AddScoped<IAccountManage<AdminUser, AdminDbContext>, DefaultAccountManage<AdminUser, AdminDbContext>>();
+            services.AddScoped<IPasswordHandler, DefaultPasswordHandler>();
 
             // accepts any access token issued by identity server
             services.AddAuthentication("Bearer")
@@ -63,7 +64,7 @@ namespace DaprTest.MemberApi
                 options.AddPolicy("ApiScope", policy =>
                 {
                     policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("scope", "memberapi");
+                    policy.RequireClaim("scope", "adminapi");
                 });
             });
 
@@ -85,18 +86,16 @@ namespace DaprTest.MemberApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DaprService v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DaprTest.AdminApi v1"));
             }
 
             app.UseRouting();
-            app.UseCors("any");
+
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCloudEvents();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapSubscribeHandler();
             });
         }
     }

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DaprTest.EFCore
+namespace DaprTest.AdminApi.Data
 {
     public class AdminDbContext : DbContext
     {

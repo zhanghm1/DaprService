@@ -1,4 +1,4 @@
-using DaprTest.MemberApi.Data;
+using DaprTest.AdminApi.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DaprTest.MemberApi
+namespace DaprTest.AdminApi
 {
     public class Program
     {
@@ -24,10 +24,10 @@ namespace DaprTest.MemberApi
                 {
                     var services = scope.ServiceProvider;
 
-                    var context = services.GetRequiredService<MemberDbContext>();
+                    var context = services.GetRequiredService<AdminDbContext>();
                     await context.Database.MigrateAsync();
 
-                    var seedData = services.GetRequiredService<MemberDbSeedData>();
+                    var seedData = services.GetRequiredService<AdminDbSeedData>();
                     await seedData.Init();
                 }
 

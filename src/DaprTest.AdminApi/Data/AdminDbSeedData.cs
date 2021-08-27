@@ -2,14 +2,13 @@
 using DaprTest.Domain;
 using DaprTest.Domain.Data;
 using DaprTest.Domain.Entities.Admins;
-using DaprTest.EFCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DaprTest.UI.Admin.Data
+namespace DaprTest.AdminApi.Data
 {
     public class AdminDbSeedData: IDbSeedData
     {
