@@ -43,12 +43,18 @@ namespace DaprTest.IdentityServer.Controllers
             var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
             
 
-            var client = await _daprClient.InvokeMethodAsync<ApplicationClient>(HttpMethod.Get, "adminapi", "ApplicationClient");
+            var client = await _daprClient.InvokeMethodAsync<ApplicationClient>(HttpMethod.Get, "adminapi", "login/client?clientId="+ context.Client.ClientId);
             switch (client.ClientType)
             {
                 case ClientType.MemberClient:
                     {
-                        var account = await _daprClient.InvokeMethodAsync<Member>(HttpMethod.Get, "memberapi", "login");
+                        LoginRequestModel loginRequest = new LoginRequestModel()
+                        {
+                            UserName = model.UserName,
+                            Password = model.Password,
+                            TenantCode= client.TenantCode,
+                        };
+                        var account = await _daprClient.InvokeMethodAsync<LoginRequestModel, Member>(HttpMethod.Post, "memberapi", "login", loginRequest);
                         if (account == null)
                         {
 
@@ -67,7 +73,14 @@ namespace DaprTest.IdentityServer.Controllers
                         if (string.IsNullOrEmpty(model.TenantCode))//商户平台登录需要选择需要登录的平台
                         {
                             LoginModel resp = new LoginModel();
-                            var listTenant = await _daprClient.InvokeMethodAsync<List<TenantInfo>>(HttpMethod.Post, "tenantapi", "login");
+
+                            StaffTenantRequestModel staffTenant = new StaffTenantRequestModel()
+                            {
+                                UserName = model.UserName,
+                                Password = model.Password,
+                            };
+                            
+                            var listTenant = await _daprClient.InvokeMethodAsync<StaffTenantRequestModel,List<StaffTenantResponseModel>>(HttpMethod.Post, "tenantapi", "login/tenants", staffTenant);
                             resp.Tenants = listTenant.Select(a => new LoginTenantModel()
                             {
                                 Name = a.Name,
@@ -77,7 +90,13 @@ namespace DaprTest.IdentityServer.Controllers
                         }
                         else
                         {
-                            var account = await _daprClient.InvokeMethodAsync<TenantStaff>(HttpMethod.Post, "tenantapi", "login");
+                            LoginRequestModel loginRequest = new LoginRequestModel()
+                            {
+                                UserName = model.UserName,
+                                Password = model.Password,
+                                TenantCode = client.TenantCode,
+                            };
+                            var account = await _daprClient.InvokeMethodAsync<LoginRequestModel,TenantStaff>(HttpMethod.Post, "tenantapi", "login", loginRequest);
 
                             if (account == null)
                             {
@@ -96,7 +115,12 @@ namespace DaprTest.IdentityServer.Controllers
                     break;
                 case ClientType.AdminClient:
                     {
-                        var account = await _daprClient.InvokeMethodAsync<AdminUser>(HttpMethod.Post, "adminapi", "login");
+                        LoginRequestModel loginRequest = new LoginRequestModel()
+                        {
+                            UserName = model.UserName,
+                            Password = model.Password
+                        };
+                        var account = await _daprClient.InvokeMethodAsync<LoginRequestModel,AdminUser>(HttpMethod.Post, "adminapi", "login", loginRequest);
                         if (account == null)
                         {
 
@@ -112,7 +136,7 @@ namespace DaprTest.IdentityServer.Controllers
                     break;
             }
 
-            if (checkPassword)
+            if (user!=null)
             {
                 AuthenticationProperties props = new AuthenticationProperties
                 {

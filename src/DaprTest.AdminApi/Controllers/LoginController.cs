@@ -17,10 +17,15 @@ namespace DaprTest.AdminApi.Controllers
     {
         private readonly ILogger<LoginController> _logger;
         private IAccountManage<AdminUser, AdminDbContext> _accountManage;
-        public LoginController(ILogger<LoginController> logger, IAccountManage<AdminUser, AdminDbContext> accountManage)
+        private AdminDbContext _adminDbContext;
+        public LoginController(ILogger<LoginController> logger
+            , IAccountManage<AdminUser, AdminDbContext> accountManage
+            , AdminDbContext adminDbContext
+            )
         {
             _logger = logger;
             _accountManage = accountManage;
+            _adminDbContext = adminDbContext;
         }
         [AllowAnonymous]
         [HttpPost]
@@ -39,6 +44,14 @@ namespace DaprTest.AdminApi.Controllers
                 };
             }
             return resp;
+        }
+        [AllowAnonymous]
+        [HttpGet("client")]
+        public async Task<ApplicationClient> GetClient(string clientId)
+        {
+            ApplicationClient adminUser = _adminDbContext.ApplicationClients.Where(a=>a.ClientId== clientId).FirstOrDefault();
+            
+            return adminUser;
         }
     }
 }

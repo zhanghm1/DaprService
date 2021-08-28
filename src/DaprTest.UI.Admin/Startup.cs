@@ -9,9 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
-using DaprTest.EFCore;
 using Microsoft.EntityFrameworkCore;
-using DaprTest.UI.Admin.Data;
 using DaprTest.Domain.Entities.Admins;
 using DaprTest.Application.AccountServices;
 using DaprTest.Domain.Data;
@@ -61,15 +59,15 @@ namespace DaprTest.UI.Admin
                 options.MinimumSameSitePolicy = SameSiteMode.Lax;
             });
 
-            string connectionString = Configuration["ConnectionString"];
-            Console.WriteLine(connectionString);
-            services.AddDbContext<AdminDbContext>(options => {
-                options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
-            });
+            //string connectionString = Configuration["ConnectionString"];
+            //Console.WriteLine(connectionString);
+            //services.AddDbContext<AdminDbContext>(options => {
+            //    options.UseMySql(connectionString, ServerVersion.Parse("8.0"));
+            //});
 
-            services.AddScoped<IAccountManage<AdminUser, AdminDbContext>, DefaultAccountManage<AdminUser, AdminDbContext>>();
-            services.AddSingleton<IPasswordHandler, DefaultPasswordHandler>();
-            services.AddScoped<AdminDbSeedData>();
+            //services.AddScoped<IAccountManage<AdminUser, AdminDbContext>, DefaultAccountManage<AdminUser, AdminDbContext>>();
+            //services.AddSingleton<IPasswordHandler, DefaultPasswordHandler>();
+            //services.AddScoped<AdminDbSeedData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,25 +1,26 @@
-﻿using DaprTest.EFCore;
+﻿using Dapr.Client;
+using DaprTest.Domain.Entities.Admins;
 using IdentityServer4.Models;
 using IdentityServer4.Stores;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace DaprTest.IdentityServer
 {
     public class ClientStore : IClientStore
     {
-        private AdminDbContext _adminDbContext;
-        public ClientStore(AdminDbContext adminDbContext)
+        private readonly DaprClient _daprClient;
+        public ClientStore(DaprClient daprClient)
         {
-            _adminDbContext = adminDbContext;
+            _daprClient = daprClient;
         }
         public async Task<Client> FindClientByIdAsync(string clientId)
         {
-           var dbClient = await _adminDbContext.ApplicationClients.FirstOrDefaultAsync(a=>a.ClientId==clientId);
-            //throw new NotImplementedException();
+           var dbClient = await _daprClient.InvokeMethodAsync<ApplicationClient>(HttpMethod.Get, "adminapi", "login/client?clientId="+ clientId);
 
             var client = new Client()
             {

@@ -10,6 +10,7 @@ namespace DaprTest.Domain.Data
    public class TenantInfoData
     {
         public static string DefaultTenantCode = "DefaultTenant";
+        public static string DefaultTenantName = "默认商户";
         public static List<TenantInfo> List = new List<TenantInfo>() {
                 new TenantInfo()
                 {
@@ -17,7 +18,7 @@ namespace DaprTest.Domain.Data
                     Address="测试地址",
                     Phone="130xxxxxxxx",
                     Email="TestTenant@TestTenant.com",
-                    Name=DefaultTenantCode,
+                    Name=DefaultTenantName,
                 },
             };
     }

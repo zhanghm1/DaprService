@@ -48,20 +48,18 @@ namespace DaprTest.TenantApi.Controllers
             return resp;
         }
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost("tenants")]
         public override async Task<List<StaffTenantResponseModel>> StaffTenant(StaffTenantRequestModel model)
         {
             List<StaffTenantResponseModel> resp = new List<StaffTenantResponseModel>();
-            var staffs = _tenantDbContext.TenantStaffs.Where(a=>a.UserName== model.UserName).ToList();
-            foreach (var staff in staffs)
-            {
-                //if (_accountManage.CheckPassword(staff, model.Password))
-                //{
-
-                //}
-            }
+            var tenants = _tenantDbContext.TenantStaffs.Where(a=>a.UserName== model.UserName).Select(a=>new StaffTenantResponseModel() { 
+            Name=a.TenantName,
+            TenantCode=a.TenantCode
             
-            return null;
+            }).ToList();
+            
+            
+            return tenants;
         }
     }
 }

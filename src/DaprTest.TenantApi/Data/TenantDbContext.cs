@@ -18,7 +18,7 @@ namespace DaprTest.TenantApi.Data
         public DbSet<StoreInfo> StoreInfos { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //add-migration init -Context TenantDbContext -OutputDir Tenants/migrations
+            //add-migration init -Context TenantDbContext -OutputDir Data/migrations
             //optionsBuilder.LogTo(Console.WriteLine);
             base.OnConfiguring(optionsBuilder);
         }

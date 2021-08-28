@@ -19,7 +19,7 @@ namespace DaprTest.MemberApi.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //add-migration init -Context MemberDbContext -OutputDir Members/migrations
+            //add-migration init -Context MemberDbContext -OutputDir Data/migrations
             //optionsBuilder.LogTo(Console.WriteLine);
             base.OnConfiguring(optionsBuilder);
         }

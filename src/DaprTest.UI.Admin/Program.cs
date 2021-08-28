@@ -1,5 +1,3 @@
-using DaprTest.EFCore;
-using DaprTest.UI.Admin.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,11 +23,11 @@ namespace DaprTest.UI.Admin
                 {
                     var services = scope.ServiceProvider;
 
-                    var context = services.GetRequiredService<AdminDbContext>();
-                    await context.Database.MigrateAsync();
+                    //var context = services.GetRequiredService<AdminDbContext>();
+                    //await context.Database.MigrateAsync();
 
-                    var seedData = services.GetRequiredService<AdminDbSeedData>();
-                    await seedData.Init();
+                    //var seedData = services.GetRequiredService<AdminDbSeedData>();
+                    //await seedData.Init();
                 }
 
                 host.Run();

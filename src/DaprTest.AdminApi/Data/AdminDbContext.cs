@@ -23,7 +23,7 @@ namespace DaprTest.AdminApi.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //add-migration init -Context AdminDbContext -OutputDir Admins/migrations
+            //add-migration init -Context AdminDbContext -OutputDir Data/migrations
             //optionsBuilder.LogTo(Console.WriteLine);
             base.OnConfiguring(optionsBuilder);
         }

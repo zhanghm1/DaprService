@@ -1,6 +1,5 @@
 using DaprTest.Application.AccountServices;
 using DaprTest.Domain.Entities.Tenants;
-using DaprTest.EFCore;
 using DaprTest.TenantApi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

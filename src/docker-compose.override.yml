@@ -105,6 +105,28 @@ services:
       - "./dapr/components/:/components"
       - "./dapr/configuration/:/configuration"
 
+  daprtest.adminapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=admin_db;user ID=root;Password=123456;
+      - IdentityServerUrl=http://${LOCALHOST_IP}:7000
+      # 服务间的内部http访问可以使用服务名,内部访问更推荐用dapr访问
+      - ApiUrl=http://daprtest.nginxgateway
+      - AdminManageUrl=http://${LOCALHOST_IP}:7001
+      - TenantManageUrl=http://${LOCALHOST_IP}:7002
+      - DefaultTenantWebUrl=http://${LOCALHOST_IP}:7003
+    ports:
+      - "80"
+  daprtest.adminapi.dapr:
+    command: [ "./daprd",
+    "-app-id", "adminapi",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-config", "/configuration/eshop-config.yaml" ]
+    volumes:
+      - "./dapr/components/:/components"
+      - "./dapr/configuration/:/configuration"
+
   daprtest.nginxgateway:
     ports:
       - "6001:80"
@@ -112,23 +134,18 @@ services:
   daprtest.identityserver:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStringMember=Data Source=mysql;port=3306;Initial Catalog=member_db;user ID=root;Password=123456;
-      - ConnectionStringTenant=Data Source=mysql;port=3306;Initial Catalog=tenant_db;user ID=root;Password=123456;
-      - ConnectionStringAdmin=Data Source=mysql;port=3306;Initial Catalog=admin_db;user ID=root;Password=123456;
     ports:
       - "7000:80"
+  daprtest.identityserver.dapr:
+    command: [ "./daprd",
+    "-app-id", "identityserver",
+    "-app-port", "80"]
 
   daprtest.ui.admin:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=admin_db;user ID=root;Password=123456;
-      #内部访问又要浏览器跳转，用服务名能内部访问不能跳转，用localhost能跳转，不能内部访问，所以用IP
-      - IdentityServerUrl=http://${LOCALHOST_IP}:7000  
-      # 服务间的内部http访问可以使用服务名,内部访问更推荐用dapr访问
+      - IdentityServerUrl=http://${LOCALHOST_IP}:7000
       - ApiUrl=http://daprtest.nginxgateway
-      - AdminManageUrl=http://${LOCALHOST_IP}:7001
-      - TenantManageUrl=http://${LOCALHOST_IP}:7002
-      - DefaultTenantWebUrl=http://${LOCALHOST_IP}:7003
     ports:
       - "7001:80"
 
@@ -139,6 +156,9 @@ services:
   daprtest.ui.defaulttenantweb:
     ports:
       - "7003:80"
+
+
+
 
 
 

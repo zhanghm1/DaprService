@@ -1,4 +1,3 @@
-using DaprTest.EFCore;
 using DaprTest.TenantApi.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

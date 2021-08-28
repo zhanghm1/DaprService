@@ -16,5 +16,6 @@ namespace DaprTest.Domain
         public string Email { get; set; }
         public string StoreId { get; set; }
         public string TenantCode { get; set; }
+        public string TenantName { get; set; }
     }
 }

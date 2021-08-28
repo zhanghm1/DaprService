@@ -70,6 +70,17 @@ services:
       - daprtest.memberapi
     network_mode: "service:daprtest.memberapi"
 
+  daprtest.adminapi:
+    image: ${DOCKER_REGISTRY-}daprtestadminapi
+    build:
+      context: .
+      dockerfile: DaprTest.AdminApi/Dockerfile
+  daprtest.adminapi.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - daprtest.adminapi
+    network_mode: "service:daprtest.adminapi"
+
   daprtest.nginxgateway:
     image: daprtest.nginxgateway
     build:
@@ -81,6 +92,11 @@ services:
     build:
       context: .
       dockerfile: DaprTest.IdentityServer/Dockerfile
+  daprtest.identityserver.dapr:
+    image: "daprio/daprd:latest"
+    depends_on:
+      - daprtest.identityserver
+    network_mode: "service:daprtest.identityserver"
 
   daprtest.ui.admin:
     image: ${DOCKER_REGISTRY-}daprtestuiadmin
@@ -92,13 +108,16 @@ services:
     image: daprtest.ui.tenant
     build:
       context: .
-      dockerfile: DaprTest.UI.Tenant/ClientVue/Dockerfile
+      dockerfile: DaprTest.UI.Tenant/ClientVue/dist/Dockerfile
 
   daprtest.ui.defaulttenantweb:
     image: daprtest.ui.defaulttenantweb
     build:
       context: .
-      dockerfile: DaprTest.UI.DefaultTenantWeb/ClientVue/Dockerfile
+      dockerfile: DaprTest.UI.DefaultTenantWeb/ClientVue/dist/Dockerfile
+
+
+
 
 
 
