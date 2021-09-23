@@ -38,6 +38,7 @@ namespace DaprTest.IdentityServer
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddClientStore<ClientStore>()
                 .AddProfileService<ProfileService>()
+                
                 .AddDeveloperSigningCredential();
 
             //…Ë÷√cookie π≤œÌ

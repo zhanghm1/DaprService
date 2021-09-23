@@ -110,8 +110,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString=Data Source=mysql;port=3306;Initial Catalog=admin_db;user ID=root;Password=123456;
       - IdentityServerUrl=http://${LOCALHOST_IP}:7000
-      # 服务间的内部http访问可以使用服务名,内部访问更推荐用dapr访问
-      - ApiUrl=http://daprtest.nginxgateway
       - AdminManageUrl=http://${LOCALHOST_IP}:7001
       - TenantManageUrl=http://${LOCALHOST_IP}:7002
       - DefaultTenantWebUrl=http://${LOCALHOST_IP}:7003
